@@ -1,0 +1,1184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>This is So On Brand ✦ Beyond the trend. Always on brand.</title>
+<meta name="description" content="A branding studio for brands that wanna be unmistakably themselves." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Brand book fonts only: Playfair Display (≈ Tan Ashford) + DM Sans (≈ TT Fors) -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700;1,900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+
+<!--
+  GOOGLE SHEETS HOOKUP (form submissions land in your sheet)
+  ──────────────────────────────────────────────────────────
+  1. Create a new Google Sheet. First row headers (in this exact order):
+     Timestamp | Name | Email | Brand | Stage | Services | Vision
+  2. Extensions ▸ Apps Script. Replace code with:
+
+     function doPost(e) {
+       const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Sheet1');
+       const d = e.parameter;
+       sheet.appendRow([new Date(), d.name, d.email, d.brand, d.stage, d.services, d.vision]);
+       return ContentService.createTextOutput(JSON.stringify({ok:true})).setMimeType(ContentService.MimeType.JSON);
+     }
+
+  3. Deploy ▸ New deployment ▸ type "Web app" ▸ Execute as: Me ▸ Who has access: Anyone.
+  4. Copy the Web app URL it gives you and paste it below into  window.SHEETS_ENDPOINT  .
+-->
+
+<style>
+:root{
+  --blue:#72C1D6;
+  --red:#C82510;
+  --yellow:#ECD754;
+  --green:#4E894F;
+  --cream:#F5EFE0;
+  --paper:#FAF6EC;
+  --ink:#1A1714;
+  --ink-soft:#5a5249;
+  --serif:'Playfair Display','Times New Roman',serif;
+  --sans:'DM Sans',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{font-size:17px;line-height:1.6}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit}
+::selection{background:var(--red);color:var(--paper)}
+
+/* highlighter style underline (Lauren-style emphasis) */
+.hl{text-decoration:underline;text-decoration-color:var(--red);text-decoration-thickness:2.5px;text-underline-offset:5px;font-weight:700;color:var(--ink)}
+.hl.b{text-decoration-color:var(--blue)}
+.hl.g{text-decoration-color:var(--green)}
+.hl.y{text-decoration-color:#c2a824}
+
+/* ---------- nav ---------- */
+nav.top{position:sticky;top:0;z-index:90;display:flex;justify-content:space-between;align-items:center;padding:18px 32px;background:var(--cream);border-bottom:1px solid rgba(26,23,20,.12);transition:padding .3s ease}
+nav.top.scrolled{padding:12px 32px;background:rgba(245,239,224,.94);backdrop-filter:blur(8px)}
+nav.top .mark{font-family:var(--serif);font-style:italic;font-weight:700;font-size:22px;letter-spacing:-.01em;display:flex;align-items:center;gap:6px;color:var(--ink)}
+nav.top .mark .star{color:var(--red);font-size:14px;font-style:normal}
+nav.top ul{display:flex;gap:34px;list-style:none;font-size:13px;letter-spacing:.06em;text-transform:capitalize}
+nav.top ul a{position:relative;padding:6px 0;transition:color .25s ease}
+nav.top ul a:hover{color:var(--red)}
+@media (max-width:760px){nav.top ul{display:none}nav.top{padding:14px 18px}}
+
+/* ---------- buttons (3 CTA buttons total) ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--red);color:var(--paper);padding:16px 32px;border-radius:999px;font-size:13px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;transition:all .25s ease;border:1.5px solid var(--ink);cursor:pointer;font-family:var(--sans);text-decoration:none}
+.btn:hover{background:var(--ink);color:var(--red);transform:translateY(-2px)}
+.btn.yellow{background:var(--yellow);color:var(--ink)}
+.btn.yellow:hover{background:var(--ink);color:var(--yellow)}
+.btn.green{background:var(--green);color:var(--paper)}
+.btn.green:hover{background:var(--ink);color:var(--green)}
+
+/* ---------- shared ---------- */
+.eyebrow{display:inline-block;font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:18px;font-weight:500}
+.eyebrow.light{color:var(--paper)}
+.h2{font-family:var(--serif);font-weight:700;font-size:clamp(40px,5.6vw,84px);line-height:1.02;letter-spacing:-.025em}
+.h2 em{font-style:italic;font-weight:400}
+.h2 .red{color:var(--red)}
+.h2 .green{color:var(--green)}
+.h2 .blue{color:var(--blue)}
+
+/* ---------- hero (photo 1 layout, left aligned) ---------- */
+.hero{padding:80px 36px 70px;background:var(--cream);position:relative;overflow:hidden;min-height:92vh;display:flex;flex-direction:column;justify-content:center}
+.hero .top-row{display:flex;justify-content:space-between;align-items:center;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-soft);max-width:1300px;margin:0 auto 70px;width:100%;gap:20px;flex-wrap:wrap}
+.hero .top-row .star{color:var(--red);font-size:13px}
+.hero .lockup{max-width:1300px;margin:0 auto;width:100%}
+.hero h1{font-family:var(--serif);font-weight:900;font-size:clamp(72px,14vw,220px);line-height:.94;letter-spacing:-.045em;margin:0;text-align:left}
+.hero h1 .l1{display:block;color:var(--ink)}
+.hero h1 .l2{display:block;font-style:italic;font-weight:900;color:var(--red);margin-top:6px}
+.hero h1 .star{display:inline-block;color:var(--red);font-style:normal;transform:translateY(-.02em);margin-left:.05em}
+.hero .sub{margin-top:30px;font-size:13px;letter-spacing:.36em;text-transform:uppercase;color:var(--ink-soft);text-align:center}
+.hero .sub .star{color:var(--red);font-size:14px;margin:0 12px}
+
+.hero .strap{margin-top:60px;display:flex;justify-content:space-between;align-items:flex-end;gap:30px;max-width:1300px;margin-left:auto;margin-right:auto;width:100%;flex-wrap:wrap}
+.hero .strap .l{max-width:420px;color:var(--ink-soft);font-size:16px;line-height:1.55}
+.hero .strap .l b{color:var(--ink);font-weight:700}
+.hero .strap .r{display:flex;align-items:center;gap:18px}
+.hero .strap .r .mark-it{font-family:var(--serif);font-style:italic;font-weight:400;font-size:22px;color:var(--red);line-height:1;white-space:nowrap}
+
+.hero .scroll-hint{margin-top:40px;text-align:center;display:flex;align-items:center;justify-content:center;gap:14px;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-soft)}
+.hero .scroll-hint .line{width:60px;height:1px;background:var(--ink-soft);position:relative;overflow:hidden}
+.hero .scroll-hint .line::after{content:"";position:absolute;left:-40%;top:0;width:40%;height:100%;background:var(--red);animation:dash 2.4s linear infinite}
+@keyframes dash{0%{left:-40%}100%{left:100%}}
+
+@media (max-width:760px){
+  .hero{padding:80px 20px 60px}
+  .hero h1{font-size:18vw}
+  .hero .strap{gap:30px}
+}
+
+/* ---------- marquees (big italic serif, like the earlier version) ---------- */
+.marquee{padding:14px 0;overflow:hidden;border-block:1.5px solid var(--ink);font-family:var(--serif);font-style:italic;font-weight:900;font-size:clamp(18px,2.6vw,34px);line-height:1;white-space:nowrap;display:flex;gap:30px}
+.marquee .track{display:flex;gap:30px;animation:slide 32s linear infinite;align-items:center}
+.marquee .track .star{display:inline-block;font-size:.6em;transform:translateY(-.12em);margin:0 18px;font-style:normal;font-weight:400}
+@keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.marquee.red{background:var(--red);color:var(--paper)}
+.marquee.red .star{color:var(--yellow)}
+.marquee.green{background:var(--green);color:var(--paper)}
+.marquee.green .star{color:var(--yellow)}
+.marquee.green .track{animation-direction:reverse}
+
+/* ---------- manifesto / studio ---------- */
+.manifesto{padding:130px 36px;background:var(--paper);position:relative;overflow:hidden}
+.manifesto-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.05fr .95fr;gap:80px;align-items:center}
+.manifesto h2{margin-bottom:24px}
+.manifesto p{color:var(--ink-soft);font-size:17px;max-width:480px;margin-bottom:14px}
+.manifesto p b{color:var(--ink)}
+.manifesto p em{font-style:italic;color:var(--ink)}
+.manifesto .visual{position:relative}
+.manifesto .receipt{position:relative;background:var(--cream);border:1.5px solid var(--ink);padding:32px 30px 36px;transform:rotate(1.4deg);box-shadow:10px 10px 0 var(--ink);max-width:420px;margin-left:auto;transition:transform .35s ease}
+.manifesto .receipt:hover{transform:rotate(0) translateY(-4px)}
+.manifesto .receipt::before{content:"BRAND ✦ RECEIPT";position:absolute;top:-13px;left:24px;background:var(--yellow);border:1.5px solid var(--ink);padding:3px 10px;font-size:10px;letter-spacing:.2em;font-weight:700;transform:rotate(-3deg)}
+.manifesto .receipt h4{font-family:var(--serif);font-style:italic;font-weight:700;font-size:24px;margin-bottom:18px}
+.manifesto .receipt ul{list-style:none;display:flex;flex-direction:column;gap:11px;border-top:1px dashed var(--ink);padding-top:16px}
+.manifesto .receipt li{display:flex;justify-content:space-between;font-size:15px}
+.manifesto .receipt li span{font-family:var(--serif);font-weight:700}
+.manifesto .receipt li.yes span{color:var(--green)}
+.manifesto .receipt li.no span{color:var(--red)}
+.manifesto .receipt .total{margin-top:20px;border-top:2px solid var(--ink);padding-top:14px;display:flex;justify-content:space-between;font-family:var(--serif);font-weight:700;font-size:22px}
+.manifesto .receipt .total span{color:var(--red);font-style:italic}
+.manifesto .pin{position:absolute;top:-85px;right:30px;font-family:var(--serif);font-style:italic;font-weight:400;font-size:20px;color:var(--blue);transform:rotate(-8deg);line-height:1.1;text-align:center;z-index:5}
+@media (max-width:900px){.manifesto-grid{grid-template-columns:1fr;gap:50px}.manifesto .receipt{margin:0 auto}}
+
+/* ---------- vibe ---------- */
+.vibe{padding:110px 36px;background:var(--yellow);border-block:1.5px solid var(--ink)}
+.vibe-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:.9fr 1.1fr;gap:60px;align-items:center}
+.vibe h2{font-family:var(--serif);font-weight:700;font-size:clamp(36px,5vw,68px);line-height:.98;letter-spacing:-.02em}
+.vibe h2 em{font-style:italic;font-weight:400;color:var(--red)}
+.vibe .sub{margin-top:14px;color:var(--ink);max-width:380px;font-size:16px}
+.vibe .toggle{display:inline-flex;background:var(--paper);border:1.5px solid var(--ink);border-radius:999px;padding:5px;margin-top:24px}
+.vibe .toggle button{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:10px 22px;border:0;background:transparent;border-radius:999px;cursor:pointer;color:var(--ink);transition:all .3s ease}
+.vibe .toggle button.on{background:var(--ink);color:var(--paper)}
+.vibe .panel{background:var(--paper);border:1.5px solid var(--ink);padding:30px;min-height:200px;font-family:var(--serif);font-size:21px;font-style:italic;line-height:1.4;position:relative;box-shadow:8px 8px 0 var(--ink);transform:rotate(-1deg);transition:transform .35s ease}
+.vibe .panel:hover{transform:rotate(0)}
+.vibe .panel.off{font-style:normal;font-family:var(--sans);font-size:16px;line-height:1.55}
+.vibe .panel .tag{position:absolute;top:-14px;left:24px;background:var(--red);color:var(--paper);font-family:var(--sans);font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:6px 12px;font-style:normal;font-weight:700;border:1.5px solid var(--ink)}
+.vibe .panel.off .tag{background:var(--ink);color:var(--paper)}
+@media (max-width:900px){.vibe-grid{grid-template-columns:1fr;gap:30px}}
+
+/* ---------- elevating ---------- */
+.elevating{padding:130px 36px 150px;background:var(--red);color:var(--paper);position:relative;overflow:hidden}
+.elevating .inner{max-width:760px;margin:0 auto;text-align:center;position:relative;z-index:5}
+.elevating .eyebrow{color:var(--yellow)}
+.elevating .h2{color:var(--paper);margin:0 auto 28px}
+.elevating .h2 em{color:var(--yellow)}
+.elevating .lead{max-width:540px;margin:0 auto 36px;color:rgba(245,239,224,.92);font-size:17px}
+.elevating .lead em{font-style:italic;color:var(--yellow)}
+.float{position:absolute;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--ink);box-shadow:6px 6px 0 var(--ink);transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+.float:hover{transform:scale(1.06) rotate(0deg)!important;z-index:10}
+.float .lab{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);background:var(--paper);border:1.5px solid var(--ink);padding:3px 10px;font-size:9px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:var(--ink);white-space:nowrap}
+.float.f1{width:140px;height:140px;background:var(--yellow);top:8%;left:5%;transform:rotate(-9deg)}
+.float.f2{width:120px;height:140px;background:var(--paper);top:14%;right:7%;transform:rotate(10deg)}
+.float.f3{width:130px;height:130px;background:var(--green);bottom:14%;left:9%;transform:rotate(8deg)}
+.float.f4{width:140px;height:140px;background:var(--blue);bottom:12%;right:6%;transform:rotate(-12deg)}
+@media (max-width:1100px){.float{transform:scale(.85)}}
+@media (max-width:760px){.float{display:none}}
+
+/* scrapbook-style notes scattered around the elevating section */
+.elevating .note{position:absolute;font-family:var(--serif);font-style:italic;font-weight:400;font-size:clamp(15px,1.5vw,22px);color:var(--paper);white-space:nowrap;z-index:3;transition:transform .35s ease;letter-spacing:-.005em;line-height:1.2}
+.elevating .note:hover{transform:rotate(0) scale(1.06)!important}
+.elevating .note .u{border-bottom:2.5px solid var(--yellow);padding-bottom:1px}
+.elevating .note.n1{top:9%;left:9%;transform:rotate(-8deg)}
+.elevating .note.n2{top:11%;right:9%;transform:rotate(7deg)}
+.elevating .note.n3{top:44%;left:8%;transform:rotate(-4deg)}
+.elevating .note.n4{top:42%;right:8%;transform:rotate(5deg)}
+.elevating .note.n5{bottom:12%;left:11%;transform:rotate(7deg)}
+.elevating .note.n6{bottom:14%;right:10%;transform:rotate(-8deg)}
+
+.elevating .scribble{position:absolute;z-index:3;pointer-events:none}
+.elevating .scribble.sb1{top:22%;left:18%;width:54px;height:26px;transform:rotate(-12deg)}
+.elevating .scribble.sb2{top:18%;right:22%;width:38px;height:38px;transform:rotate(15deg)}
+.elevating .scribble.sb3{bottom:30%;left:14%;width:50px;height:24px;transform:rotate(6deg)}
+
+/* yellow highlighter for keyword emphasis on the red panel */
+.elevating .lead .hlY{text-decoration:underline;text-decoration-color:var(--yellow);text-decoration-thickness:2.5px;text-underline-offset:5px;font-weight:700;color:var(--paper)}
+
+@media (max-width:1100px){
+  .elevating .note{font-size:14px}
+  .elevating .note.n3,.elevating .note.n4{display:none}
+}
+@media (max-width:760px){
+  .elevating .note,.elevating .scribble{display:none}
+}
+
+/* interactive vector illustrations on the elevating panel */
+.elevating .vec{position:absolute;z-index:2;cursor:pointer;background:transparent;border:0;padding:0;font:inherit;color:inherit;outline:none}
+.elevating .vec svg{width:84px;height:84px;display:block;filter:drop-shadow(4px 4px 0 #1A1714);transition:transform .5s cubic-bezier(.2,1.2,.4,1)}
+.elevating .vec:hover svg{transform:scale(1.18) rotate(8deg)}
+.elevating .vec:focus-visible svg{transform:scale(1.18) rotate(8deg)}
+.elevating .vec.spinning svg{animation:spinIt .9s cubic-bezier(.2,1.2,.4,1)}
+@keyframes spinIt{0%{transform:scale(1) rotate(0)}50%{transform:scale(1.25) rotate(180deg)}100%{transform:scale(1) rotate(360deg)}}
+.elevating .vec.v1{top:24%;left:18%;transform:rotate(-6deg)}
+.elevating .vec.v2{top:24%;right:18%;transform:rotate(7deg)}
+.elevating .vec.v3{bottom:24%;left:18%;transform:rotate(8deg)}
+.elevating .vec.v4{bottom:26%;right:18%;transform:rotate(-9deg)}
+@media (max-width:1100px){.elevating .vec svg{width:64px;height:64px}.elevating .vec.v1,.elevating .vec.v2{display:none}}
+@media (max-width:760px){.elevating .vec{display:none}}
+
+/* ---------- founders ---------- */
+.founders{padding:120px 36px;background:var(--cream);border-block:1.5px solid var(--ink)}
+.founders .head{max-width:920px;margin:0 auto 50px;text-align:center}
+.founders .head .pill{display:inline-block;background:var(--green);color:var(--paper);padding:14px 30px;border-radius:999px;font-family:var(--sans);font-weight:700;font-size:18px;letter-spacing:.04em;border:1.5px solid var(--ink);margin-bottom:26px}
+.founders .head h2{margin-bottom:20px}
+.founders .head .lead{max-width:560px;margin:0 auto;color:var(--ink-soft);font-size:17px}
+.founders .head .lead em{font-style:italic;color:var(--red)}
+.founders-grid{max-width:920px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:30px}
+.founder{display:flex;gap:18px;align-items:flex-start;background:var(--paper);padding:18px;border:1.5px solid var(--ink);box-shadow:5px 5px 0 var(--ink);transition:transform .35s ease, box-shadow .35s ease}
+.founder:hover{transform:translate(-2px,-2px) rotate(-.5deg);box-shadow:8px 8px 0 var(--ink)}
+.founder:nth-child(2):hover{transform:translate(-2px,-2px) rotate(.5deg)}
+.founder .ph{flex:0 0 92px;width:92px;height:120px;overflow:hidden;border:1px solid var(--ink);background:linear-gradient(135deg,var(--red),#7a1f0f)}
+.founder:nth-child(2) .ph{background:linear-gradient(135deg,var(--blue),#2d6376)}
+.founder .ph svg{width:100%;height:100%}
+.founder .info h4{font-family:var(--serif);font-weight:700;font-size:20px;letter-spacing:-.01em;line-height:1.1}
+.founder .info h4 em{font-style:italic;color:var(--red);font-weight:400}
+.founder:nth-child(2) .info h4 em{color:var(--green)}
+.founder .info p{margin-top:8px;color:var(--ink-soft);font-size:13.5px;line-height:1.5}
+.founder .info .sig{display:inline-block;margin-top:8px;font-family:var(--serif);font-style:italic;font-weight:500;font-size:15px;color:var(--red);line-height:1.3}
+.founder:nth-child(2) .info .sig{color:var(--green)}
+
+/* music player */
+.music{margin:50px auto 0;max-width:560px;display:flex;align-items:center;gap:18px;background:var(--paper);border:1.5px solid var(--ink);padding:14px 18px;border-radius:999px;box-shadow:5px 5px 0 var(--ink)}
+.music button.toggle-mus{flex:0 0 44px;width:44px;height:44px;border-radius:50%;background:var(--red);color:var(--paper);border:1.5px solid var(--ink);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .2s ease, background .2s ease}
+.music button.toggle-mus:hover{background:var(--ink);transform:scale(1.06)}
+.music .info{flex:1;min-width:0}
+.music .info .name{font-family:var(--serif);font-style:italic;font-weight:700;font-size:16px;line-height:1}
+.music .info .meta{font-size:11px;color:var(--ink-soft);letter-spacing:.16em;text-transform:uppercase;margin-top:4px}
+.music .bars{display:flex;gap:3px;align-items:flex-end;height:22px}
+.music .bars span{display:block;width:3px;height:6px;background:var(--ink);border-radius:2px}
+.music.playing .bars span{animation:bars 1s ease-in-out infinite}
+.music.playing .bars span:nth-child(2){animation-delay:.15s}
+.music.playing .bars span:nth-child(3){animation-delay:.3s}
+.music.playing .bars span:nth-child(4){animation-delay:.45s}
+@keyframes bars{0%,100%{height:6px}50%{height:22px}}
+@media (max-width:760px){.founders-grid{grid-template-columns:1fr;gap:18px}}
+
+/* ---------- services (photo 3 inspired, accordion expand) ---------- */
+.services{padding:130px 36px;background:var(--paper);position:relative}
+.services-head{max-width:1200px;margin:0 auto 60px;text-align:center;position:relative}
+.services-head .h2{margin:0 auto;max-width:900px}
+.services-head .h2 em{font-style:italic;font-weight:400;color:var(--red)}
+.services-head .pin{position:absolute;right:8%;top:-10px;font-family:var(--serif);font-style:italic;font-weight:400;font-size:18px;color:var(--green);transform:rotate(6deg);line-height:1.1;text-align:center;max-width:160px}
+
+.svc-list{max-width:1100px;margin:0 auto;border-top:1px solid rgba(26,23,20,.2)}
+.svc-item{border-bottom:1px solid rgba(26,23,20,.2);transition:background .35s ease}
+.svc-item.open{background:var(--cream)}
+.svc-row{display:grid;grid-template-columns:90px 1.1fr 1.4fr 60px;gap:30px;align-items:center;padding:32px 14px;cursor:pointer;width:100%;background:transparent;border:0;text-align:left;font-family:inherit;color:inherit;transition:padding .35s ease}
+.svc-item.open .svc-row,.svc-row:hover{padding-left:28px}
+.svc-row .num{font-family:var(--serif);font-style:italic;font-weight:400;font-size:54px;line-height:1;letter-spacing:-.02em}
+.svc-item[data-c="r"] .num{color:var(--red)}
+.svc-item[data-c="g"] .num{color:var(--green)}
+.svc-item[data-c="b"] .num{color:var(--blue)}
+.svc-item[data-c="y"] .num{color:#c2a824}
+.svc-row .title{font-family:var(--serif);font-weight:400;font-style:italic;font-size:clamp(28px,3.4vw,46px);line-height:1.05;letter-spacing:-.01em;color:var(--ink)}
+.svc-row .desc{color:var(--ink);font-size:15px;line-height:1.5}
+.svc-row .desc .tags{display:block;margin-top:6px;color:var(--red);font-size:13px;font-weight:500}
+.svc-row .arrow{font-size:22px;color:var(--ink);text-align:right;transform:rotate(0);transition:transform .35s ease;font-family:var(--serif);font-weight:400}
+.svc-item.open .svc-row .arrow{transform:rotate(45deg);color:var(--red)}
+
+.svc-details{max-height:0;overflow:hidden;transition:max-height .55s ease}
+.svc-item.open .svc-details{max-height:1200px}
+.svc-details-inner{padding:0 14px 36px;display:grid;grid-template-columns:90px 1fr 1fr;gap:30px}
+.svc-details-inner .lbl{display:block;font-family:var(--sans);font-weight:700;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:10px}
+.svc-details-inner .stk{display:inline-block;background:var(--yellow);border:1.5px solid var(--ink);padding:6px 14px;font-family:var(--serif);font-style:italic;font-weight:700;font-size:16px;color:var(--ink);transform:rotate(-2deg);margin-bottom:14px;box-shadow:3px 3px 0 var(--ink)}
+.svc-item[data-c="r"] .stk{background:var(--red);color:var(--paper)}
+.svc-item[data-c="b"] .stk{background:var(--blue)}
+.svc-item[data-c="g"] .stk{background:var(--green);color:var(--paper)}
+.svc-details-inner .col2 ul{list-style:none;display:flex;flex-direction:column;gap:7px}
+.svc-details-inner .col2 ul li{display:flex;gap:10px;align-items:flex-start;font-size:14.5px;color:var(--ink)}
+.svc-details-inner .col2 ul li::before{content:"✦";color:var(--red);font-family:var(--serif);font-style:italic;flex-shrink:0}
+.svc-details-inner .col3 .deliv{font-family:var(--serif);font-style:italic;font-size:18px;line-height:1.4;color:var(--ink);margin-bottom:18px}
+.svc-details-inner .col3 .time{font-size:14.5px;color:var(--ink)}
+
+@media (max-width:900px){
+  .svc-row{grid-template-columns:60px 1fr 30px;gap:14px;padding:24px 10px}
+  .svc-row .num{font-size:36px}
+  .svc-row .desc{display:none}
+  .svc-details-inner{grid-template-columns:1fr;gap:18px;padding:0 10px 28px}
+}
+
+/* ---------- projects (horizontal motion graphics) ---------- */
+.projects{padding:30px 0 130px;background:var(--ink);color:var(--paper);position:relative;overflow:hidden}
+.projects-head{max-width:1100px;margin:0 auto 60px;text-align:center;padding:0 36px;position:relative}
+.projects-head .eyebrow{color:var(--paper)}
+.projects-head .h2{color:var(--paper)}
+.projects-head .h2 em{font-style:italic;font-weight:400;color:var(--yellow)}
+.projects-head .lead{max-width:520px;margin:20px auto 0;color:rgba(245,239,224,.78);font-size:17px}
+.projects-head .pin{position:absolute;right:8%;top:-10px;font-family:var(--serif);font-style:italic;font-weight:400;font-size:18px;color:var(--yellow);transform:rotate(6deg);line-height:1.1;text-align:center;max-width:140px}
+
+.projects-track-wrap{overflow:hidden;position:relative;width:100%;mask-image:linear-gradient(90deg,transparent 0,#000 4%,#000 96%,transparent 100%);-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 4%,#000 96%,transparent 100%)}
+.projects-track{display:flex;gap:30px;animation:projScroll 60s linear infinite;width:max-content;padding:20px 30px}
+.projects-track:hover{animation-play-state:paused}
+@keyframes projScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+.proj{flex:0 0 300px;width:300px;cursor:pointer}
+.proj .visual{aspect-ratio:4/5;position:relative;perspective:1200px;box-shadow:6px 6px 0 var(--ink);transition:transform .35s ease, box-shadow .35s ease}
+.proj:hover .visual{transform:translate(-3px,-3px) rotate(-.6deg);box-shadow:10px 10px 0 var(--ink)}
+.proj .flipper{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.2,.8,.2,1)}
+.proj.flipped .flipper{transform:rotateY(180deg)}
+.proj .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border:1.5px solid var(--ink);background:var(--paper)}
+.proj .face.front{overflow:hidden}
+.proj .visual svg{width:100%;height:100%;display:block}
+.proj .face.back{transform:rotateY(180deg);padding:26px 22px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;text-align:left}
+.proj .face.back h5{font-family:var(--serif);font-style:italic;font-weight:700;font-size:26px;color:var(--ink);line-height:1;letter-spacing:-.01em}
+.proj .face.back p{margin-top:14px;font-size:13.5px;color:var(--ink-soft);line-height:1.55;flex:1}
+.proj .face.back .meta{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--red);font-weight:500;margin-top:14px}
+.proj .info{margin-top:18px;display:flex;justify-content:space-between;align-items:baseline;gap:14px}
+.proj .info h4{font-family:var(--serif);font-style:italic;font-weight:700;font-size:22px;letter-spacing:-.01em;color:var(--paper);line-height:1.05}
+.proj .info .yr{font-size:13px;color:rgba(245,239,224,.7);font-family:var(--serif);font-style:italic;flex-shrink:0}
+.proj .cat{display:block;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--paper);margin-top:4px;font-weight:500}
+
+@media (max-width:760px){
+  .projects{padding:90px 0}
+  .proj{flex:0 0 240px;width:240px}
+  .projects-track{animation-duration:46s;gap:20px}
+}
+
+/* ---------- signup ---------- */
+.signup{padding:130px 36px;background:var(--green);color:var(--paper);position:relative;overflow:hidden}
+.signup-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;position:relative;z-index:2}
+.signup .h2{color:var(--paper)}
+.signup .h2 em{color:var(--yellow)}
+.signup .left .eyebrow{color:var(--yellow)}
+.signup .left p{color:rgba(245,239,224,.92);margin-top:24px;font-size:17px;max-width:430px}
+.signup .left .row-inline{margin-top:30px;display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.signup .left .pin{font-family:var(--serif);font-style:italic;font-weight:400;font-size:26px;color:var(--yellow);line-height:1}
+
+/* rotating circle TISOB */
+.circ{width:170px;height:170px;flex-shrink:0;position:relative}
+.circ .ring{width:170px;height:170px;animation:spin 16s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.circ .ring text{font-family:var(--sans);font-size:13px;letter-spacing:.2em;font-weight:700;fill:var(--paper);text-transform:uppercase}
+.circ .center{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-style:italic;font-weight:900;font-size:32px;color:var(--yellow);letter-spacing:-.01em;text-shadow:0 0 0 var(--ink)}
+
+.signup form{background:var(--paper);color:var(--ink);padding:36px;border:1.5px solid var(--ink);box-shadow:10px 10px 0 var(--ink);transform:rotate(-.6deg);transition:transform .3s ease}
+.signup form:focus-within{transform:rotate(0)}
+.signup form .row{display:grid;gap:20px}
+.signup form .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.signup form label{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);display:block;margin-bottom:8px;font-weight:500}
+.signup form input,.signup form select,.signup form textarea{width:100%;border:0;border-bottom:1.5px solid var(--ink);background:transparent;padding:10px 0;font-family:var(--sans);font-size:16px;color:var(--ink);outline:none;transition:border-color .25s ease}
+.signup form input:focus,.signup form select:focus,.signup form textarea:focus{border-color:var(--red)}
+.signup form textarea{min-height:80px;resize:vertical}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.chip{padding:7px 13px;border:1.5px solid var(--ink);border-radius:999px;font-size:12px;cursor:pointer;background:transparent;font-family:var(--sans);user-select:none;transition:all .2s ease;color:var(--ink);font-weight:500}
+.chip:hover{transform:translateY(-2px)}
+.chip.on{background:var(--red);color:var(--paper);border-color:var(--ink)}
+.signup form button.btn{margin-top:8px;width:100%;padding:18px}
+.signup .thanks{display:none;text-align:center;padding:20px 0}
+.signup .thanks.show{display:block;animation:pop .5s cubic-bezier(.2,1.4,.4,1)}
+@keyframes pop{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
+.signup .thanks h3{font-family:var(--serif);font-style:italic;font-size:32px;color:var(--red)}
+.signup .thanks p{margin-top:10px;color:var(--ink-soft)}
+@media (max-width:900px){.signup-grid{grid-template-columns:1fr;gap:50px}}
+
+/* ---------- footer ---------- */
+footer{background:var(--paper);color:var(--ink);padding:80px 36px 40px;border-top:1.5px solid var(--ink)}
+footer .top{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px}
+footer h5{font-family:var(--serif);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.18em;margin-bottom:18px}
+footer ul{list-style:none}
+footer li{margin-bottom:8px;font-size:15px;color:var(--ink-soft)}
+footer li a:hover{color:var(--red)}
+footer li a[href^="mailto:"]{color:var(--red);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1.5px;font-weight:500}
+footer li a[href^="mailto:"]:hover{color:var(--ink)}
+footer .word{max-width:1200px;margin:60px auto 0;font-family:var(--serif);font-weight:400;font-style:italic;font-size:clamp(56px,11vw,140px);line-height:.9;letter-spacing:-.04em;text-align:center}
+footer .word .red{color:var(--red)}
+footer .word .green{color:var(--green)}
+footer .meta{max-width:1200px;margin:30px auto 0;display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;padding-top:22px;border-top:1.5px solid var(--ink);font-size:13px;color:var(--ink-soft)}
+@media (max-width:900px){footer .top{grid-template-columns:1fr 1fr}}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .9s ease, transform .9s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:translateY(0)}
+.reveal.d1{transition-delay:.1s}
+.reveal.d2{transition-delay:.2s}
+.reveal.d3{transition-delay:.3s}
+</style>
+</head>
+<body>
+
+<!-- nav (text only, no CTA button here) -->
+<nav class="top" id="nav">
+  <a href="#top" class="mark"><em>This is</em> So On Brand <span class="star">✦</span></a>
+  <ul>
+    <li><a href="#studio" data-link>Studio</a></li>
+    <li><a href="#vibe" data-link>Vibe Check</a></li>
+    <li><a href="#founders" data-link>Founders</a></li>
+    <li><a href="#services" data-link>Services</a></li>
+    <li><a href="#signup" data-link>Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO (photo 1 layout, headline left aligned) -->
+<header class="hero" id="top">
+  <div class="top-row">
+    <span>A boutique branding studio</span>
+    <span>Est. 2026 <span class="star">✦</span> Brands with soul</span>
+  </div>
+
+  <div class="lockup">
+    <h1>
+      <span class="l1">This is</span>
+      <span class="l2">So On Brand <span class="star">✦</span></span>
+    </h1>
+    <div class="sub">Beyond the trend <span class="star">✦</span> Always on brand</div>
+  </div>
+
+  <div class="strap">
+    <p class="l">Hey founder, your brand should feel <span class="hl">SO you</span>. We make brands feel <b>completely, unmistakably themselves</b>, so aligned with their identity that every touchpoint earns a <em>this is so on brand</em>.</p>
+    <div class="r">
+      <!-- CTA #1 of 3 -->
+      <a class="btn" href="#signup" data-link>Let's Get on Brand!</a>
+      <span class="mark-it">it's giving on brand ✦</span>
+    </div>
+  </div>
+
+  <div class="scroll-hint"><span class="line"></span> Scroll, babe <span class="line"></span></div>
+</header>
+
+<!-- MARQUEE 1 (big italic serif) -->
+<div class="marquee red" aria-hidden="true">
+  <div class="track">
+    <span>So On Brand</span><span class="star">✦</span>
+    <span>it's giving</span><span class="star">✦</span>
+    <span>So On Brand</span><span class="star">✦</span>
+    <span>strategy first</span><span class="star">✦</span>
+    <span>So On Brand</span><span class="star">✦</span>
+    <span>never basic</span><span class="star">✦</span>
+    <span>So On Brand</span><span class="star">✦</span>
+    <span>it's giving</span><span class="star">✦</span>
+    <span>So On Brand</span><span class="star">✦</span>
+    <span>strategy first</span><span class="star">✦</span>
+    <span>So On Brand</span><span class="star">✦</span>
+    <span>never basic</span><span class="star">✦</span>
+  </div>
+</div>
+
+<!-- MANIFESTO -->
+<section class="manifesto" id="studio">
+  <div class="manifesto-grid">
+    <div class="text">
+      <span class="eyebrow reveal">✦ This is the studio</span>
+      <h2 class="h2 reveal d1">Where <em class="red">strategy</em><br/>meets <em class="green">soul.</em></h2>
+      <p class="reveal d2">Hey, we get it. Building a brand is hard. Your feed is full of agencies promising the world &amp; your inbox is packed with cookie-cutter pitches. So <span class="hl b">where do we fit in?</span></p>
+      <p class="reveal d2">We're the studio that obsesses over <em>strategy first</em>. Every visual decision is rooted in why. Nothing is decorative without purpose. We exist to make brands feel <b>completely, unmistakably themselves</b>.</p>
+    </div>
+    <div class="visual reveal d2">
+      <span class="pin">a little<br/>receipt for<br/>your soul ↘</span>
+      <div class="receipt" aria-label="receipt graphic">
+        <h4>What you actually get ✦</h4>
+        <ul>
+          <li class="yes">Strategy first thinking <span>✓</span></li>
+          <li class="yes">A name people remember <span>✓</span></li>
+          <li class="yes">Tone of voice that's chef's kiss <span>✓</span></li>
+          <li class="yes">Identity that scales <span>✓</span></li>
+          <li class="yes">Packaging worth the shelf <span>✓</span></li>
+          <li class="no">Generic mood boards <span>✗</span></li>
+          <li class="no">Cringe taglines <span>✗</span></li>
+          <li class="no">"Synergy" as a word <span>✗</span></li>
+        </ul>
+        <div class="total">Total vibe <span>Immaculate</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VIBE CHECK -->
+<section class="vibe" id="vibe">
+  <div class="vibe-grid">
+    <div>
+      <span class="eyebrow reveal">✦ Vibe check</span>
+      <h2 class="reveal d1">Are we<br/><em>on brand</em><br/>or off brand?</h2>
+      <p class="sub reveal d2">A little game. Toggle the switch and see how the same idea reads in two very different voices. Spoiler: only one of these makes you wanna press follow.</p>
+      <div class="toggle reveal d3" role="tablist">
+        <button id="offBtn">Off Brand</button>
+        <button class="on" id="onBtn">On Brand</button>
+      </div>
+    </div>
+    <div class="reveal d2">
+      <div class="panel" id="vibePanel">
+        <span class="tag" id="vibeTag">On Brand ✦</span>
+        <div id="vibeText">"It's giving editorial. It's giving intentional. It's giving 'I'd save this packaging just to keep on my shelf'. That's the goal: touchpoints that feel like the brand winked at you."</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ELEVATING (scrapbook notes + interactive vectors) -->
+<section class="elevating">
+  <!-- scrapbook scattered labels -->
+  <div class="note n1">strategy first <span class="u">thinking</span></div>
+  <div class="note n2"><span class="u">naming</span> that sticks</div>
+  <div class="note n3"><span class="u">positioning</span> maps</div>
+  <div class="note n4">industry <span class="u">fluency</span></div>
+  <div class="note n5"><span class="u">moodboards</span> &amp; art</div>
+  <div class="note n6">trend <span class="u">commentary</span></div>
+
+  <!-- interactive vectors (hover or click to play) -->
+  <button class="vec v1" aria-label="typography spec">
+    <svg viewBox="0 0 80 80"><circle cx="40" cy="40" r="36" fill="#FAF6EC" stroke="#1A1714" stroke-width="2"/><text x="40" y="58" font-family="Playfair Display,serif" font-style="italic" font-weight="900" font-size="50" fill="#1A1714" text-anchor="middle">Aa</text></svg>
+  </button>
+  <button class="vec v2" aria-label="color palette">
+    <svg viewBox="0 0 80 80"><rect x="6" y="6" width="68" height="68" rx="3" fill="#FAF6EC" stroke="#1A1714" stroke-width="2"/><rect x="14" y="14" width="22" height="22" fill="#72C1D6"/><rect x="44" y="14" width="22" height="22" fill="#C82510"/><rect x="14" y="44" width="22" height="22" fill="#ECD754"/><rect x="44" y="44" width="22" height="22" fill="#4E894F"/></svg>
+  </button>
+  <button class="vec v3" aria-label="brand book">
+    <svg viewBox="0 0 80 80"><rect x="14" y="10" width="52" height="60" rx="2" fill="#FAF6EC" stroke="#1A1714" stroke-width="2"/><rect x="22" y="20" width="36" height="6" fill="#C82510"/><rect x="22" y="32" width="28" height="2" fill="#1A1714"/><rect x="22" y="38" width="32" height="2" fill="#1A1714"/><rect x="22" y="44" width="22" height="2" fill="#1A1714"/><text x="40" y="62" font-family="Playfair Display,serif" font-style="italic" font-weight="900" font-size="9" fill="#1A1714" text-anchor="middle">brand book</text></svg>
+  </button>
+  <button class="vec v4" aria-label="star mark">
+    <svg viewBox="0 0 80 80"><circle cx="40" cy="40" r="34" fill="#ECD754" stroke="#1A1714" stroke-width="2"/><text x="40" y="55" font-family="Playfair Display,serif" font-style="italic" font-weight="900" font-size="40" fill="#C82510" text-anchor="middle">✦</text></svg>
+  </button>
+
+  <div class="inner">
+    <span class="eyebrow">[ what we do ]</span>
+    <h2 class="h2 reveal">Helping brands<br/>reach their<br/><em>peak era.</em></h2>
+    <!-- CTA #2 of 3 -->
+    <a class="btn yellow reveal d2" href="#services" data-link>See Services</a>
+  </div>
+</section>
+
+<!-- FOUNDERS -->
+<section class="founders" id="founders">
+  <div class="head">
+    <span class="pill">Hey, Hi, Hello</span>
+    <p class="lead reveal d1">we're the Branding bible for the <em>chronically online</em>. Breaking down what's <span class="hl">iconic</span> vs <span class="hl">flop coded</span>, fuelled by iced lattes and unfiltered takes. Two besties, no chill</p>
+    <h2 class="h2 reveal d2"><em class="red">Nyashi</em> &amp; <em class="green">Aayushi.</em></h2>
+  </div>
+
+  <div class="founders-grid">
+    <div class="founder reveal">
+      <div class="ph" aria-label="placeholder portrait of Nyashi">
+        <svg viewBox="0 0 92 120" preserveAspectRatio="xMidYMid slice">
+          <rect width="92" height="120" fill="#C82510"/>
+          <ellipse cx="46" cy="50" rx="18" ry="22" fill="#3a0d05" opacity=".55"/>
+          <path d="M16 120 Q16 80 46 66 Q76 80 76 120 Z" fill="#3a0d05" opacity=".55"/>
+          <ellipse cx="46" cy="48" rx="12" ry="14" fill="#e6a48f" opacity=".55"/>
+          <path d="M24 46 Q34 16 46 18 Q58 16 68 46 Q68 30 46 26 Q24 30 24 46" fill="#1f0805" opacity=".7"/>
+        </svg>
+      </div>
+      <div class="info">
+        <h4>Nyashi <em>Srivastava</em></h4>
+        <p>Lives for positioning frameworks and strategy that actually shows up in the work. Will ask <em>"but who is this for, really?"</em> until the answer is good.</p>
+        <span class="sig">"if it's not on brand, why is it on the moodboard?"</span>
+      </div>
+    </div>
+
+    <div class="founder reveal d2">
+      <div class="ph" aria-label="placeholder portrait of Aayushi">
+        <svg viewBox="0 0 92 120" preserveAspectRatio="xMidYMid slice">
+          <rect width="92" height="120" fill="#72C1D6"/>
+          <ellipse cx="46" cy="50" rx="18" ry="22" fill="#1f3942" opacity=".55"/>
+          <path d="M16 120 Q16 80 46 66 Q76 80 76 120 Z" fill="#4E894F" opacity=".75"/>
+          <ellipse cx="46" cy="48" rx="12" ry="14" fill="#efc28e" opacity=".7"/>
+          <path d="M22 52 Q24 16 46 20 Q68 16 70 52 Q60 32 46 26 Q32 32 22 52" fill="#1f0805" opacity=".8"/>
+          <path d="M22 52 Q24 80 32 96" fill="none" stroke="#1f0805" stroke-width="5" opacity=".7"/>
+          <path d="M70 52 Q68 80 60 96" fill="none" stroke="#1f0805" stroke-width="5" opacity=".7"/>
+        </svg>
+      </div>
+      <div class="info">
+        <h4>Aayushi <em>Malaviya</em></h4>
+        <p>Obsessed with art direction, packaging, and the way a really good logo lockup makes you stop scrolling. Will redo the kerning at 2 a.m. because <em>it matters</em>.</p>
+        <span class="sig">"pretty is the floor, iconic is the dream."</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- music player -->
+  <div class="music" id="music" aria-label="Background music">
+    <button class="toggle-mus" id="musToggle" aria-label="Play music">▶</button>
+    <div class="info">
+      <div class="name">tokyo spring (wooll remix) ✦ yawnathan</div>
+      <div class="meta">upbeat lofi · pause anytime</div>
+    </div>
+    <div class="bars" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+    <audio id="lofi-audio" loop preload="auto">
+      <source src="tokyo-spring-wooll-remix-yawnathan-main-version-46220-02-08.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+</section>
+
+<!-- MARQUEE 2 -->
+<div class="marquee green" aria-hidden="true">
+  <div class="track">
+    <span>Beyond the trend</span><span class="star">✦</span>
+    <span>Always on brand</span><span class="star">✦</span>
+    <span>Strategy first</span><span class="star">✦</span>
+    <span>Never basic</span><span class="star">✦</span>
+    <span>It's giving</span><span class="star">✦</span>
+    <span>So on brand</span><span class="star">✦</span>
+    <span>Beyond the trend</span><span class="star">✦</span>
+    <span>Always on brand</span><span class="star">✦</span>
+    <span>Strategy first</span><span class="star">✦</span>
+    <span>Never basic</span><span class="star">✦</span>
+    <span>It's giving</span><span class="star">✦</span>
+    <span>So on brand</span><span class="star">✦</span>
+  </div>
+</div>
+
+<!-- SERVICES (accordion expand, photo 3 styling) -->
+<section class="services" id="services">
+  <div class="services-head">
+    <span class="pin">click any row<br/>to peek inside ✦</span>
+    <span class="eyebrow reveal">✦ What we do</span>
+    <h2 class="h2 reveal d1">Eight ways we make<br/>your brand <em>feel like itself.</em></h2>
+  </div>
+  <div class="svc-list" id="svc-list">
+    <!-- inserted by JS -->
+  </div>
+</section>
+
+<!-- PROJECTS (latest work, horizontal auto-scroll) -->
+<section class="projects" id="projects">
+  <div class="projects-head">
+    <span class="pin">always<br/>cooking ↘</span>
+    <span class="eyebrow reveal">✦ The work</span>
+    <h2 class="h2 reveal d1">Latest projects,<br/><em>straight from the studio.</em></h2>
+    <p class="lead reveal d2">A peek inside what we've been cooking. Hover to slow it down.</p>
+  </div>
+
+  <div class="projects-track-wrap">
+    <div class="projects-track">
+
+      <!-- card 1 -->
+      <article class="proj">
+        <div class="visual">
+          <svg viewBox="0 0 280 350" preserveAspectRatio="xMidYMid slice">
+            <rect width="280" height="350" fill="#ECD754"/>
+            <text x="140" y="170" font-family="Playfair Display,serif" font-style="italic" font-weight="900" font-size="50" fill="#1A1714" text-anchor="middle">Lumière</text>
+            <text x="140" y="198" font-family="DM Sans,sans-serif" font-size="9" fill="#1A1714" text-anchor="middle" letter-spacing="5">SKIN, BUT SOFTER</text>
+            <text x="140" y="282" font-family="Playfair Display,serif" font-style="italic" font-weight="900" font-size="36" fill="#C82510" text-anchor="middle">✦</text>
+          </svg>
+        </div>
+        <div class="info"><h4>Lumière</h4><span class="yr">2026</span></div>
+        <span class="cat">Skincare · Identity</span>
+      </article>
+
+      <!-- card 2 -->
+      <article class="proj">
+        <div class="visual">
+          <svg viewBox="0 0 280 350" preserveAspectRatio="xMidYMid slice">
+            <rect width="280" height="350" fill="#72C1D6"/>
+            <rect x="95" y="100" width="90" height="160" fill="#FAF6EC" stroke="#1A1714" stroke-width="2"/>
+            <rect x="115" y="78" width="50" height="24" fill="#FAF6EC" stroke="#1A1714" stroke-width="2"/>
+            <rect x="105" y="148" width="70" height="64" fill="#C82510"/>
+            <text x="140" y="178" font-family="Playfair Display,serif" font-style="italic" font-weight="700" font-size="13" fill="#FAF6EC" text-anchor="middle">Maison</text>
+            <text x="140" y="197" font-family="Playfair Display,serif" font-style="italic" font-weight="700" font-size="11" fill="#FAF6EC" text-anchor="middle">Olfac</text>
+            <text x="140" y="308" font-family="Playfair Display,serif" font-style="italic" font-weight="900" font-size="24" fill="#1A1714" text-anchor="middle">Maison Olfac</text>
+          </svg>
+        </div>
+        <div class="info"><h4>Maison Olfac</h4><span class="yr">2026</span></div>
+        <span class="cat">Fragrance · Packaging</span>
+      </article>
+
+      <!-- card 3 -->
+      <article class="proj">
+        <div class="visual">
+          <svg viewBox="0 0 280 350" preserveAspectRatio="xMidYMid slice">
+            <rect width="280" height="350" fill="#C82510"/>
+            <rect x="40" y="80" width="56" height="56" fill="#FAF6EC"/>
+            <rect x="112" y="80" width="56" height="56" fill="#72C1D6"/>
+            <rect x="184" y="80" width="56" height="56" fill="#ECD754"/>
+            <rect x="40" y="152" width="56" height="56" fill="#4E894F"/>
+            <rect x="112" y="152" width="56" height="56" fill="#1A1714"/>
+            <rect x="184" y="152" width="56" height="56" fill="#FAF6EC"/>
+            <text x="140" y="252" font-family="Playfair Display,serif" font-style="italic" font-weight="900" font-size="34" fill="#FAF6EC" text-anchor="middle">Studio Hue</text>
+            <text x="140" y="278" font-family="DM Sans,sans-serif" font-size="9" fill="#FAF6EC" text-anchor="middle" letter-spacing="4">VISUAL IDENTITY</text>
+          </svg>
+        </div>
+        <div class="info"><h4>Studio Hue</h4><span class="yr">2026</span></div>
+        <span class="cat">Identity System</span>
+      </article>
+
+      <!-- card 4 -->
+      <article class="proj">
+        <div class="visual">
+          <svg viewBox="0 0 280 350" preserveAspectRatio="xMidYMid slice">
+            <rect width="280" height="350" fill="#4E894F"/>
+            <path d="M140 80 Q90 130 110 210 Q140 190 140 80" fill="#FAF6EC" opacity=".92"/>
+            <path d="M140 80 Q190 130 170 210 Q140 190 140 80" fill="#FAF6EC" opacity=".82"/>
+            <path d="M140 80 L140 235" stroke="#1A1714" stroke-width="1.5"/>
+            <text x="140" y="282" font-family="Playfair Display,serif" font-style="italic" font-weight="900" font-size="40" fill="#FAF6EC" text-anchor="middle">Wildroot</text>
+            <text x="140" y="306" font-family="DM Sans,sans-serif" font-size="9" fill="#FAF6EC" text-anchor="middle" letter-spacing="4">SLOW HAIR RITUALS</text>
+          </svg>
+        </div>
+        <div class="info"><h4>Wildroot</h4><span class="yr">2026</span></div>
+        <span class="cat">Haircare · Strategy</span>
+      </article>
+
+      <!-- card 5 -->
+      <article class="proj">
+        <div class="visual">
+          <svg viewBox="0 0 280 350" preserveAspectRatio="xMidYMid slice">
+            <rect width="280" height="350" fill="#F5EFE0"/>
+            <rect x="100" y="100" width="80" height="160" rx="40" fill="#C82510" stroke="#1A1714" stroke-width="2"/>
+            <line x1="100" y1="180" x2="180" y2="180" stroke="#1A1714" stroke-width="1.5"/>
+            <text x="140" y="160" font-family="Playfair Display,serif" font-style="italic" font-weight="700" font-size="13" fill="#FAF6EC" text-anchor="middle">Bloom</text>
+            <text x="140" y="220" font-family="Playfair Display,serif" font-style="italic" font-weight="700" font-size="13" fill="#FAF6EC" text-anchor="middle">well</text>
+            <text x="140" y="308" font-family="Playfair Display,serif" font-style="italic" font-weight="900" font-size="28" fill="#1A1714" text-anchor="middle">Bloomwell</text>
+          </svg>
+        </div>
+        <div class="info"><h4>Bloomwell</h4><span class="yr">2026</span></div>
+        <span class="cat">Wellness · Naming</span>
+      </article>
+
+      <!-- card 6 -->
+      <article class="proj">
+        <div class="visual">
+          <svg viewBox="0 0 280 350" preserveAspectRatio="xMidYMid slice">
+            <rect width="280" height="350" fill="#1A1714"/>
+            <text x="140" y="170" font-family="Playfair Display,serif" font-style="italic" font-weight="900" font-size="62" fill="#FAF6EC" text-anchor="middle">Hush</text>
+            <text x="140" y="208" font-family="Playfair Display,serif" font-style="italic" font-weight="400" font-size="32" fill="#ECD754" text-anchor="middle">Rituals</text>
+            <text x="140" y="282" font-family="Playfair Display,serif" font-style="italic" font-weight="900" font-size="22" fill="#C82510" text-anchor="middle">✦</text>
+          </svg>
+        </div>
+        <div class="info"><h4>Hush Rituals</h4><span class="yr">2026</span></div>
+        <span class="cat">Bodycare · Art Direction</span>
+      </article>
+
+      <!-- duplicates for seamless loop -->
+      <article class="proj" aria-hidden="true">
+        <div class="visual">
+          <svg viewBox="0 0 280 350" preserveAspectRatio="xMidYMid slice">
+            <rect width="280" height="350" fill="#ECD754"/>
+            <text x="140" y="170" font-family="Playfair Display,serif" font-style="italic" font-weight="900" font-size="50" fill="#1A1714" text-anchor="middle">Lumière</text>
+            <text x="140" y="198" font-family="DM Sans,sans-serif" font-size="9" fill="#1A1714" text-anchor="middle" letter-spacing="5">SKIN, BUT SOFTER</text>
+            <text x="140" y="282" font-family="Playfair Display,serif" font-style="italic" font-weight="900" font-size="36" fill="#C82510" text-anchor="middle">✦</text>
+          </svg>
+        </div>
+        <div class="info"><h4>Lumière</h4><span class="yr">2026</span></div>
+        <span class="cat">Skincare · Identity</span>
+      </article>
+      <article class="proj" aria-hidden="true">
+        <div class="visual">
+          <svg viewBox="0 0 280 350" preserveAspectRatio="xMidYMid slice">
+            <rect width="280" height="350" fill="#72C1D6"/>
+            <rect x="95" y="100" width="90" height="160" fill="#FAF6EC" stroke="#1A1714" stroke-width="2"/>
+            <rect x="115" y="78" width="50" height="24" fill="#FAF6EC" stroke="#1A1714" stroke-width="2"/>
+            <rect x="105" y="148" width="70" height="64" fill="#C82510"/>
+            <text x="140" y="178" font-family="Playfair Display,serif" font-style="italic" font-weight="700" font-size="13" fill="#FAF6EC" text-anchor="middle">Maison</text>
+            <text x="140" y="197" font-family="Playfair Display,serif" font-style="italic" font-weight="700" font-size="11" fill="#FAF6EC" text-anchor="middle">Olfac</text>
+            <text x="140" y="308" font-family="Playfair Display,serif" font-style="italic" font-weight="900" font-size="24" fill="#1A1714" text-anchor="middle">Maison Olfac</text>
+          </svg>
+        </div>
+        <div class="info"><h4>Maison Olfac</h4><span class="yr">2026</span></div>
+        <span class="cat">Fragrance · Packaging</span>
+      </article>
+      <article class="proj" aria-hidden="true">
+        <div class="visual">
+          <svg viewBox="0 0 280 350" preserveAspectRatio="xMidYMid slice">
+            <rect width="280" height="350" fill="#C82510"/>
+            <rect x="40" y="80" width="56" height="56" fill="#FAF6EC"/>
+            <rect x="112" y="80" width="56" height="56" fill="#72C1D6"/>
+            <rect x="184" y="80" width="56" height="56" fill="#ECD754"/>
+            <rect x="40" y="152" width="56" height="56" fill="#4E894F"/>
+            <rect x="112" y="152" width="56" height="56" fill="#1A1714"/>
+            <rect x="184" y="152" width="56" height="56" fill="#FAF6EC"/>
+            <text x="140" y="252" font-family="Playfair Display,serif" font-style="italic" font-weight="900" font-size="34" fill="#FAF6EC" text-anchor="middle">Studio Hue</text>
+            <text x="140" y="278" font-family="DM Sans,sans-serif" font-size="9" fill="#FAF6EC" text-anchor="middle" letter-spacing="4">VISUAL IDENTITY</text>
+          </svg>
+        </div>
+        <div class="info"><h4>Studio Hue</h4><span class="yr">2026</span></div>
+        <span class="cat">Identity System</span>
+      </article>
+      <article class="proj" aria-hidden="true">
+        <div class="visual">
+          <svg viewBox="0 0 280 350" preserveAspectRatio="xMidYMid slice">
+            <rect width="280" height="350" fill="#4E894F"/>
+            <path d="M140 80 Q90 130 110 210 Q140 190 140 80" fill="#FAF6EC" opacity=".92"/>
+            <path d="M140 80 Q190 130 170 210 Q140 190 140 80" fill="#FAF6EC" opacity=".82"/>
+            <path d="M140 80 L140 235" stroke="#1A1714" stroke-width="1.5"/>
+            <text x="140" y="282" font-family="Playfair Display,serif" font-style="italic" font-weight="900" font-size="40" fill="#FAF6EC" text-anchor="middle">Wildroot</text>
+            <text x="140" y="306" font-family="DM Sans,sans-serif" font-size="9" fill="#FAF6EC" text-anchor="middle" letter-spacing="4">SLOW HAIR RITUALS</text>
+          </svg>
+        </div>
+        <div class="info"><h4>Wildroot</h4><span class="yr">2026</span></div>
+        <span class="cat">Haircare · Strategy</span>
+      </article>
+      <article class="proj" aria-hidden="true">
+        <div class="visual">
+          <svg viewBox="0 0 280 350" preserveAspectRatio="xMidYMid slice">
+            <rect width="280" height="350" fill="#F5EFE0"/>
+            <rect x="100" y="100" width="80" height="160" rx="40" fill="#C82510" stroke="#1A1714" stroke-width="2"/>
+            <line x1="100" y1="180" x2="180" y2="180" stroke="#1A1714" stroke-width="1.5"/>
+            <text x="140" y="160" font-family="Playfair Display,serif" font-style="italic" font-weight="700" font-size="13" fill="#FAF6EC" text-anchor="middle">Bloom</text>
+            <text x="140" y="220" font-family="Playfair Display,serif" font-style="italic" font-weight="700" font-size="13" fill="#FAF6EC" text-anchor="middle">well</text>
+            <text x="140" y="308" font-family="Playfair Display,serif" font-style="italic" font-weight="900" font-size="28" fill="#1A1714" text-anchor="middle">Bloomwell</text>
+          </svg>
+        </div>
+        <div class="info"><h4>Bloomwell</h4><span class="yr">2026</span></div>
+        <span class="cat">Wellness · Naming</span>
+      </article>
+      <article class="proj" aria-hidden="true">
+        <div class="visual">
+          <svg viewBox="0 0 280 350" preserveAspectRatio="xMidYMid slice">
+            <rect width="280" height="350" fill="#1A1714"/>
+            <text x="140" y="170" font-family="Playfair Display,serif" font-style="italic" font-weight="900" font-size="62" fill="#FAF6EC" text-anchor="middle">Hush</text>
+            <text x="140" y="208" font-family="Playfair Display,serif" font-style="italic" font-weight="400" font-size="32" fill="#ECD754" text-anchor="middle">Rituals</text>
+            <text x="140" y="282" font-family="Playfair Display,serif" font-style="italic" font-weight="900" font-size="22" fill="#C82510" text-anchor="middle">✦</text>
+          </svg>
+        </div>
+        <div class="info"><h4>Hush Rituals</h4><span class="yr">2026</span></div>
+        <span class="cat">Bodycare · Art Direction</span>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- SIGNUP -->
+<section class="signup" id="signup">
+  <div class="signup-grid">
+    <div class="left">
+      <span class="eyebrow reveal">✦ Let's chat</span>
+      <h2 class="h2 reveal d1">Tell us about<br/>your <em>brand baby.</em></h2>
+      <p class="reveal d2">Whether you're at the napkin sketch stage or three SKUs deep, we'd love to hear about it. <span class="hl y">We don't ghost like your situationships.</span> Replies in 48hrs, guaranteed.</p>
+      <div class="row-inline reveal d3">
+        <span class="pin">don't be shy ↘</span>
+        <div class="circ" aria-hidden="true">
+          <svg class="ring" viewBox="0 0 170 170">
+            <defs>
+              <path id="circ-path" d="M 85,85 m -68,0 a 68,68 0 1,1 136,0 a 68,68 0 1,1 -136,0" />
+            </defs>
+            <text>
+              <textPath href="#circ-path">BEYOND THE TREND ✦ ALWAYS ON BRAND ✦ </textPath>
+            </text>
+          </svg>
+          <div class="center"><em>TISOB</em></div>
+        </div>
+      </div>
+    </div>
+
+    <form id="signupForm" class="reveal d2" novalidate>
+      <div class="row">
+        <div class="grid2">
+          <div>
+            <label>Your name</label>
+            <input type="text" id="name" name="name" placeholder="Founder, marketer, dreamer" required>
+          </div>
+          <div>
+            <label>Email</label>
+            <input type="email" id="email" name="email" placeholder="hi@yourbrand.com" required>
+          </div>
+        </div>
+        <div>
+          <label>Brand name (or working name)</label>
+          <input type="text" id="brand" name="brand" placeholder="The thing you're building ✦" required>
+        </div>
+        <div>
+          <label>Where you're at</label>
+          <select id="stage" name="stage">
+            <option>Just an idea (and lots of moodboards)</option>
+            <option>Pre launch, building the brand</option>
+            <option>Already launched, need a refresh</option>
+            <option>Scaling and stuck</option>
+          </select>
+        </div>
+        <div>
+          <label>What you need help with</label>
+          <div class="chips" id="chips">
+            <button type="button" class="chip">Strategy</button>
+            <button type="button" class="chip">Naming</button>
+            <button type="button" class="chip">Identity</button>
+            <button type="button" class="chip">Packaging</button>
+            <button type="button" class="chip">Social</button>
+            <button type="button" class="chip">Copy</button>
+            <button type="button" class="chip">All of it</button>
+          </div>
+          <input type="hidden" id="services-hidden" name="services" />
+        </div>
+        <div>
+          <label>Tell us your vision (or a vibe word)</label>
+          <textarea id="vision" name="vision" placeholder="One sentence is fine. A novel is also fine."></textarea>
+        </div>
+        <!-- CTA #3 of 3 -->
+        <button type="submit" class="btn">Let's Chat →</button>
+      </div>
+      <div class="thanks" id="thanks">
+        <h3>that's so on brand ✦</h3>
+        <p>We've got it. A real human will reply within 48 hours.</p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="top">
+    <div>
+      <span style="font-family:var(--serif);font-style:italic;font-weight:700;font-size:22px"><em>This is</em> So On Brand <span style="color:var(--red)">✦</span></span>
+      <p style="margin-top:14px;max-width:340px;color:var(--ink-soft);font-size:15px">A branding studio for brands that wanna be unmistakably themselves. Strategy first. Always on brand.</p>
+    </div>
+    <div>
+      <h5>Studio</h5>
+      <ul>
+        <li><a href="#studio" data-link>About</a></li>
+        <li><a href="#vibe" data-link>Vibe Check</a></li>
+        <li><a href="#founders" data-link>Founders</a></li>
+        <li><a href="#signup" data-link>Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Services</h5>
+      <ul>
+        <li>Brand Strategy</li>
+        <li>Naming &amp; Voice</li>
+        <li>Visual Identity</li>
+        <li>Packaging</li>
+        <li>Social</li>
+      </ul>
+    </div>
+    <div>
+      <h5>Find us</h5>
+      <ul>
+        <li><a href="https://www.instagram.com/thisisso_onbrand?igsh=MWdzdzhpMjg5ZTQycg==" target="_blank" rel="noopener">Instagram ↗</a></li>
+        <li><a href="#" onclick="return false">LinkedIn ↗</a></li>
+        <li><a href="mailto:soonbrand.official@gmail.com">soonbrand.official@gmail.com</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="word"><em>Beyond the trend.</em><br/>Always <span class="red">on brand</span><span class="green">.</span></div>
+
+  <div class="meta">
+    <span>© 2026 This Is So On Brand. A studio by Nyashi &amp; Aayushi.</span>
+    <span>Made with strategy &amp; very strong coffee.</span>
+  </div>
+</footer>
+
+<script>
+// ─────────── GOOGLE SHEETS ENDPOINT ───────────
+window.SHEETS_ENDPOINT = ''; // paste your Apps Script Web App URL here
+// ──────────────────────────────────────────────
+
+// nav scrolled
+const nav = document.getElementById('nav');
+window.addEventListener('scroll',()=>{
+  if(window.scrollY > 40) nav.classList.add('scrolled'); else nav.classList.remove('scrolled');
+});
+
+// smooth scroll
+document.querySelectorAll('a[data-link]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const href = a.getAttribute('href');
+    if(href && href.startsWith('#')){
+      const t = document.querySelector(href);
+      if(t){e.preventDefault();window.scrollTo({top:t.offsetTop - 70, behavior:'smooth'})}
+    }
+  });
+});
+
+// reveal on scroll
+const io = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('in'); io.unobserve(e.target);}
+  });
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// ─────────── vibe toggle ───────────
+const onText = `"It's giving editorial. It's giving intentional. It's giving 'I'd save this packaging just to keep on my shelf'. That's the goal: touchpoints that feel like the brand winked at you."`;
+const offText = `Our agency synergises holistic brand solutions to leverage best in class outcomes for forward thinking stakeholders across the dynamic consumer vertical.`;
+const panel = document.getElementById('vibePanel');
+const text = document.getElementById('vibeText');
+const tag = document.getElementById('vibeTag');
+const onBtn = document.getElementById('onBtn');
+const offBtn = document.getElementById('offBtn');
+function setMode(mode){
+  if(mode==='on'){
+    panel.classList.remove('off');
+    tag.textContent='On Brand ✦';
+    tag.style.background='var(--red)';
+    tag.style.color='var(--paper)';
+    text.textContent = onText;
+    onBtn.classList.add('on'); offBtn.classList.remove('on');
+  } else {
+    panel.classList.add('off');
+    tag.textContent='Off Brand ✗';
+    tag.style.background='var(--ink)';
+    tag.style.color='var(--paper)';
+    text.textContent = offText;
+    offBtn.classList.add('on'); onBtn.classList.remove('on');
+  }
+}
+onBtn.addEventListener('click',()=>setMode('on'));
+offBtn.addEventListener('click',()=>setMode('off'));
+
+// ─────────── services data + accordion ───────────
+const services = [
+  { id:'01', color:'r', title:'Brand Strategy &amp; Positioning', sub:'Audit · Competitor Analysis · Personas · Brand Pillars',
+    intro:'The foundation of everything: defining who you are, who you are for, and where you sit in the market.',
+    cute:'The Compass',
+    included:['Brand audit and gap analysis','Competitor and category mapping','Target personas (the people who will love you)','Brand pillars and positioning statement','Strategic narrative document'],
+    deliv:'A 30 page strategy doc your team will actually open.', time:'4 to 6 weeks' },
+  { id:'02', color:'g', title:'Naming &amp; Brand Voice', sub:'Naming · Tagline · Tone Guide · Messaging Hierarchy',
+    intro:'Names that stick, taglines that earn the space, and a tone of voice that does the work for you.',
+    cute:'The Voice',
+    included:['Brand name workshops','Naming exploration with longlist for legal','Tagline development','Tone of voice guide','Messaging hierarchy and key phrases'],
+    deliv:'A name plus a voice guide you can hand to any writer and get on brand output.', time:'3 to 5 weeks' },
+  { id:'03', color:'b', title:'Visual Identity Direction', sub:'Moodboard · Art Direction · Logo Brief · Typography',
+    intro:'Directing the visual language of the brand. We brief, you get magic.',
+    cute:'The Glow Up',
+    included:['Moodboard and creative territory','Color and typography direction','Logo brief for our designer','Brand book outline','Art direction across touchpoints'],
+    deliv:'A visual world your brand can live inside, from logo to deck.', time:'5 to 7 weeks' },
+  { id:'04', color:'r', title:'Packaging Direction', sub:'Label · Carton · Unboxing · Oversight',
+    intro:'Shelf stoppers. Unboxing as a love letter. Briefing and oversight on every detail.',
+    cute:'The Wrap',
+    included:['Packaging strategy and hierarchy','Label and carton briefing','Unboxing experience strategy','Production oversight with our designer','Photography direction'],
+    deliv:'Packaging that sells and saves on the shelf, plus the shoot to prove it.', time:'6 to 10 weeks' },
+  { id:'05', color:'g', title:'Social Media Branding', sub:'Aesthetic · Templates · Highlights · Pillars',
+    intro:'Feeds that attract the right followers, then convert them into actual loyal buyers.',
+    cute:'The Feed',
+    included:['Feed aesthetic system','Reusable templates (carousels, reel covers, stories)','Highlight cover set','Content pillars and grid strategy','30 day content calendar'],
+    deliv:'A system your team can run with for months without losing the plot.', time:'3 to 4 weeks' },
+  { id:'06', color:'b', title:'Brand Copywriting', sub:'Product · Web · Campaigns · Story',
+    intro:'Words that sell without screaming. We write the way your brand speaks, everywhere.',
+    cute:'The Words',
+    included:['Product copy and descriptions','Website copy (full sitemap)','Email and SMS flows','Campaign copy','Founder and story narratives'],
+    deliv:'Copy across every touchpoint, voice tested and scroll proof.', time:'2 to 5 weeks' },
+  { id:'07', color:'y', title:'Art Direction &amp; Content', sub:'Moodboards · Photo Direction · Campaigns · Calendars',
+    intro:'The visual world for shoots, campaigns, and the messy in between.',
+    cute:'The Eye',
+    included:['Campaign concept development','Photo and film moodboards','Shot list and casting direction','Content calendar with creative anchors','On set art direction'],
+    deliv:'Campaigns that look and sound like you, not your competitor.', time:'4 to 8 weeks per campaign' },
+  { id:'08', color:'g', title:'Brand Refresh', sub:'Audit · Evolution · Roadmap · Implementation',
+    intro:'You have outgrown yourself. We evolve carefully, without losing what already works.',
+    cute:'The Reset',
+    included:['Full brand audit (what stays, what goes)','Evolution strategy','Refresh roadmap and phased rollout','Updated identity direction','Implementation guide for your team'],
+    deliv:'A refreshed brand and a plan to roll it out without scaring loyal customers.', time:'6 to 10 weeks' }
+];
+
+// render service rows
+const list = document.getElementById('svc-list');
+services.forEach((s)=>{
+  const item = document.createElement('div');
+  item.className = 'svc-item reveal';
+  item.dataset.c = s.color;
+  const includedHTML = s.included.map(i=>`<li>${i}</li>`).join('');
+  item.innerHTML = `
+    <button class="svc-row" aria-expanded="false">
+      <span class="num">${s.id}</span>
+      <span class="title">${s.title}</span>
+      <span class="desc">${s.intro}<span class="tags">${s.sub}</span></span>
+      <span class="arrow">+</span>
+    </button>
+    <div class="svc-details">
+      <div class="svc-details-inner">
+        <div class="col1"><span class="stk">"${s.cute}"</span></div>
+        <div class="col2">
+          <span class="lbl">What's included</span>
+          <ul>${includedHTML}</ul>
+        </div>
+        <div class="col3">
+          <span class="lbl">Deliverable</span>
+          <p class="deliv">${s.deliv}</p>
+          <span class="lbl">Timeline</span>
+          <p class="time">${s.time}</p>
+        </div>
+      </div>
+    </div>
+  `;
+  const row = item.querySelector('.svc-row');
+  row.addEventListener('click', ()=>{
+    const open = item.classList.toggle('open');
+    row.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  list.appendChild(item);
+  io.observe(item);
+});
+
+// ─────────── chips ───────────
+document.querySelectorAll('#chips .chip').forEach(c=>{
+  c.addEventListener('click',()=>c.classList.toggle('on'));
+});
+
+// ─────────── form submit ───────────
+document.getElementById('signupForm').addEventListener('submit',async e=>{
+  e.preventDefault();
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const brand = document.getElementById('brand').value.trim();
+  if(!name||!email||!brand){
+    alert('hey, fill in name, email & brand at least 🙏');
+    return;
+  }
+  const services = Array.from(document.querySelectorAll('#chips .chip.on')).map(c=>c.textContent).join(', ');
+  document.getElementById('services-hidden').value = services;
+
+  if(window.SHEETS_ENDPOINT){
+    try{
+      const fd = new FormData(document.getElementById('signupForm'));
+      fd.append('services', services);
+      await fetch(window.SHEETS_ENDPOINT, { method:'POST', body:fd, mode:'no-cors' });
+    }catch(err){ console.warn('Sheets post failed', err); }
+  }
+
+  document.getElementById('signupForm').querySelector('.row').style.display='none';
+  document.getElementById('thanks').classList.add('show');
+});
+
+// ─────────── music player (HTML audio + scroll autoplay) ───────────
+const musToggle = document.getElementById('musToggle');
+const musEl = document.getElementById('music');
+const lofi = document.getElementById('lofi-audio');
+lofi.volume = 0.4;
+
+musToggle.addEventListener('click', () => {
+  if(lofi.paused) lofi.play().catch(()=>{});
+  else lofi.pause();
+});
+lofi.addEventListener('play', () => {
+  musToggle.textContent = '❚❚';
+  musToggle.setAttribute('aria-label','Pause music');
+  musEl.classList.add('playing');
+});
+lofi.addEventListener('pause', () => {
+  musToggle.textContent = '▶';
+  musToggle.setAttribute('aria-label','Play music');
+  musEl.classList.remove('playing');
+});
+
+// autoplay when the founders section scrolls into view (fires once)
+const fdSection = document.getElementById('founders');
+if(fdSection){
+  let triggered = false;
+  const musIo = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if(e.isIntersecting && !triggered){
+        triggered = true;
+        lofi.play().catch(()=>{ /* autoplay may be blocked; user can press play */ });
+      }
+    });
+  }, { threshold: 0.35 });
+  musIo.observe(fdSection);
+}
+
+// interactive vectors: click to spin
+document.querySelectorAll('.elevating .vec').forEach(v=>{
+  v.addEventListener('click',()=>{
+    v.classList.add('spinning');
+    setTimeout(()=>v.classList.remove('spinning'), 900);
+  });
+});
+
+// projects: click to flip each card, reveal a brief overview on the back
+const projectOverviews = {
+  'Lumière': { desc: 'Skin, but softer. An indie skincare brand we built from naming to packaging in 6 weeks. Soft serums, science led, sells itself.', scope: '2026 · Strategy + Identity' },
+  'Maison Olfac': { desc: 'A niche perfumery with old-world soul. We led the visual direction and packaging that feels like a love letter on a shelf.', scope: '2026 · Direction + Packaging' },
+  'Studio Hue': { desc: 'A creative studio that needed a system. From palette to logo to brand book, we built the full visual language.', scope: '2026 · Identity + Brand Book' },
+  'Wildroot': { desc: 'Slow hair rituals for the chronically over-styled. Naming, voice, and an editorial campaign that made it look effortless.', scope: '2026 · Naming + Strategy' },
+  'Bloomwell': { desc: 'A modern wellness brand built on ritual. We named it, positioned it, and gave it a tone that doesn’t sound like every other supplement.', scope: '2026 · Naming + Voice' },
+  'Hush Rituals': { desc: 'A bodycare line for slow evenings. Art direction and packaging that feels like a candle-lit ritual, not a beauty aisle.', scope: '2026 · Art Direction' }
+};
+document.querySelectorAll('.proj').forEach(p=>{
+  const title = p.querySelector('.info h4')?.textContent?.trim() || '';
+  const ov = projectOverviews[title];
+  if(!ov) return;
+  const vis = p.querySelector('.visual');
+  const original = vis.innerHTML;
+  vis.innerHTML = `<div class="flipper"><div class="face front">${original}</div><div class="face back"><h5>${title}</h5><p>${ov.desc}</p><span class="meta">${ov.scope}</span></div></div>`;
+  p.addEventListener('click',()=>p.classList.toggle('flipped'));
+});
+</script>
+</body>
+</html>
