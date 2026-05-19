@@ -11,21 +11,49 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700;1,900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
 
 <!--
-  GOOGLE SHEETS HOOKUP (form submissions land in your sheet)
-  ──────────────────────────────────────────────────────────
-  1. Create a new Google Sheet. First row headers (in this exact order):
-     Timestamp | Name | Email | Brand | Stage | Services | Vision
-  2. Extensions ▸ Apps Script. Replace code with:
+  GOOGLE SHEETS HOOKUP — two destinations, both optional but recommended
+  ──────────────────────────────────────────────────────────────────────
+  A) MAIN INTAKE FORM (the "Let's Chat" form at the bottom)
+  B) BRANDING BIBLE SUBSCRIBERS (the small PDF email-capture)
 
-     function doPost(e) {
-       const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Sheet1');
-       const d = e.parameter;
-       sheet.appendRow([new Date(), d.name, d.email, d.brand, d.stage, d.services, d.vision]);
-       return ContentService.createTextOutput(JSON.stringify({ok:true})).setMimeType(ContentService.MimeType.JSON);
-     }
+  You can use ONE sheet for both (cheap & simple) or TWO sheets
+  (cleaner — easier to email PDF subscribers separately).
 
-  3. Deploy ▸ New deployment ▸ type "Web app" ▸ Execute as: Me ▸ Who has access: Anyone.
-  4. Copy the Web app URL it gives you and paste it below into  window.SHEETS_ENDPOINT  .
+  ─── Option 1: ONE sheet for everything (simplest) ───
+  1. Make a Google Sheet. First-row headers:
+       Timestamp | Name | Email | Brand | Stage | Services | Vision | Source
+  2. Extensions ▸ Apps Script. Paste:
+
+       function doPost(e) {
+         const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Sheet1');
+         const d = e.parameter;
+         sheet.appendRow([new Date(), d.name, d.email, d.brand, d.stage, d.services, d.vision, d.source || '']);
+         return ContentService.createTextOutput(JSON.stringify({ok:true})).setMimeType(ContentService.MimeType.JSON);
+       }
+
+  3. Deploy ▸ New deployment ▸ Web app ▸ Execute as: Me ▸ Access: Anyone.
+  4. Paste the deployment URL into  window.SHEETS_ENDPOINT  below.
+  5. Leave  window.PDF_SHEETS_ENDPOINT  blank — PDF subscribers will land in the
+     same sheet, with Stage = "PDF lead magnet" so you can filter them out.
+
+  ─── Option 2: SEPARATE sheet for Branding Bible subscribers ───
+  1. Make a second Google Sheet just for PDF subscribers. Headers:
+       Timestamp | Email | Source
+  2. Apps Script for the new sheet (simpler version):
+
+       function doPost(e) {
+         const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Sheet1');
+         const d = e.parameter;
+         sheet.appendRow([new Date(), d.email, d.source || 'Branding Bible']);
+         return ContentService.createTextOutput(JSON.stringify({ok:true})).setMimeType(ContentService.MimeType.JSON);
+       }
+
+  3. Deploy as Web app (same settings) and paste THAT URL into
+      window.PDF_SHEETS_ENDPOINT  below. Branding Bible signups will now
+     auto-land in this sheet, ready for you to bulk-email the PDF.
+
+  Tip: also set  window.BRANDING_BIBLE_PDF  to a hosted PDF URL and the page
+  will pop the PDF open in a new tab the moment someone subscribes.
 -->
 
 <style>
@@ -43,7 +71,7 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
-body{font-size:17px;line-height:1.6}
+body{font-size:17px;line-height:1.6;padding-top:64px}
 img,svg{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
 button{font-family:inherit}
@@ -56,7 +84,8 @@ button{font-family:inherit}
 .hl.y{text-decoration-color:#c2a824}
 
 /* ---------- nav ---------- */
-nav.top{position:sticky;top:0;z-index:90;display:flex;justify-content:space-between;align-items:center;padding:18px 32px;background:var(--cream);border-bottom:1px solid rgba(26,23,20,.12);transition:padding .3s ease}
+nav.top{position:fixed;top:0;left:0;right:0;z-index:90;display:flex;justify-content:space-between;align-items:center;padding:18px 32px;background:var(--cream);border-bottom:1px solid rgba(26,23,20,.12);transition:padding .3s ease, box-shadow .3s ease}
+nav.top.scrolled{box-shadow:0 4px 16px -8px rgba(26,23,20,.18)}
 nav.top.scrolled{padding:12px 32px;background:rgba(245,239,224,.94);backdrop-filter:blur(8px)}
 nav.top .mark{font-family:var(--serif);font-style:italic;font-weight:700;font-size:22px;letter-spacing:-.01em;display:flex;align-items:center;gap:6px;color:var(--ink)}
 nav.top .mark .star{color:var(--red);font-size:14px;font-style:normal}
@@ -226,19 +255,27 @@ nav.top ul a:hover{color:var(--red)}
 .founders .head h2{margin-bottom:20px}
 .founders .head .lead{max-width:560px;margin:0 auto;color:var(--ink-soft);font-size:17px}
 .founders .head .lead em{font-style:italic;color:var(--red)}
-.founders-grid{max-width:920px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:30px}
-.founder{display:flex;gap:18px;align-items:flex-start;background:var(--paper);padding:18px;border:1.5px solid var(--ink);box-shadow:5px 5px 0 var(--ink);transition:transform .35s ease, box-shadow .35s ease}
-.founder:hover{transform:translate(-2px,-2px) rotate(-.5deg);box-shadow:8px 8px 0 var(--ink)}
-.founder:nth-child(2):hover{transform:translate(-2px,-2px) rotate(.5deg)}
-.founder .ph{flex:0 0 92px;width:92px;height:120px;overflow:hidden;border:1px solid var(--ink);background:linear-gradient(135deg,var(--red),#7a1f0f)}
-.founder:nth-child(2) .ph{background:linear-gradient(135deg,var(--blue),#2d6376)}
-.founder .ph svg{width:100%;height:100%}
-.founder .info h4{font-family:var(--serif);font-weight:700;font-size:20px;letter-spacing:-.01em;line-height:1.1}
-.founder .info h4 em{font-style:italic;color:var(--red);font-weight:400}
-.founder:nth-child(2) .info h4 em{color:var(--green)}
-.founder .info p{margin-top:8px;color:var(--ink-soft);font-size:13.5px;line-height:1.5}
-.founder .info .sig{display:inline-block;margin-top:8px;font-family:var(--serif);font-style:italic;font-weight:500;font-size:15px;color:var(--red);line-height:1.3}
-.founder:nth-child(2) .info .sig{color:var(--green)}
+.founders-grid{max-width:760px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:50px}
+.founder-card{cursor:pointer;perspective:1400px;transition:transform .35s ease}
+.founder-card.f1{transform:rotate(-3deg)}
+.founder-card.f2{transform:rotate(3deg)}
+.founder-card:hover{transform:rotate(0) translateY(-4px)}
+.polaroid-wrap{position:relative;width:100%;aspect-ratio:.82/1}
+.polaroid-flipper{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.founder-card.flipped .polaroid-flipper{transform:rotateY(180deg)}
+.polaroid-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:var(--paper);border:1.5px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:14px 14px 64px;display:flex;flex-direction:column}
+.polaroid-face .ph{flex:1;overflow:hidden;border:1px solid var(--ink);background:linear-gradient(135deg,var(--red),#7a1f0f)}
+.founder-card.f2 .polaroid-face .ph{background:linear-gradient(135deg,var(--blue),#2d6376)}
+.polaroid-face .ph svg{width:100%;height:100%;display:block}
+.polaroid-face .tagline{position:absolute;bottom:18px;left:14px;right:14px;text-align:center;font-family:var(--serif);font-style:italic;font-weight:400;font-size:18px;color:var(--ink);line-height:1.1;letter-spacing:-.005em}
+.polaroid-face.back{transform:rotateY(180deg);padding:24px 22px 32px;display:flex;flex-direction:column;gap:10px;text-align:left}
+.polaroid-face.back .name{display:block;font-family:var(--sans);font-weight:700;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--red);margin-bottom:4px}
+.founder-card.f2 .polaroid-face.back .name{color:var(--green)}
+.polaroid-face.back .desc{font-family:var(--serif);font-style:italic;font-weight:400;font-size:14.5px;line-height:1.4;color:var(--ink)}
+.polaroid-face.back .quote{font-family:var(--serif);font-style:italic;font-size:13px;line-height:1.35;color:var(--red);margin-top:2px}
+.founder-card.f2 .polaroid-face.back .quote{color:var(--green)}
+.polaroid-face.back .fact{font-family:var(--sans);font-size:12px;line-height:1.4;color:var(--ink-soft)}
+.polaroid-face.back .hint{position:absolute;bottom:10px;left:0;right:0;text-align:center;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);font-weight:500}
 
 /* music player */
 .music{margin:50px auto 0;max-width:560px;display:flex;align-items:center;gap:18px;background:var(--paper);border:1.5px solid var(--ink);padding:14px 18px;border-radius:999px;box-shadow:5px 5px 0 var(--ink)}
@@ -254,7 +291,7 @@ nav.top ul a:hover{color:var(--red)}
 .music.playing .bars span:nth-child(3){animation-delay:.3s}
 .music.playing .bars span:nth-child(4){animation-delay:.45s}
 @keyframes bars{0%,100%{height:6px}50%{height:22px}}
-@media (max-width:760px){.founders-grid{grid-template-columns:1fr;gap:18px}}
+@media (max-width:760px){.founders-grid{grid-template-columns:1fr;gap:60px;max-width:300px}}
 
 /* ---------- services (photo 3 inspired, accordion expand) ---------- */
 .services{padding:130px 36px;background:var(--paper);position:relative}
@@ -337,6 +374,148 @@ nav.top ul a:hover{color:var(--red)}
   .projects-track{animation-duration:46s;gap:20px}
 }
 
+/* ---------- shared btn-sm (for inline captures) ---------- */
+.btn-sm{padding:11px 18px;border:1.5px solid var(--ink);background:var(--red);color:var(--paper);font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;border-radius:8px;cursor:pointer;font-family:var(--sans);text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:6px;transition:all .25s ease;white-space:nowrap}
+.btn-sm:hover{background:var(--ink);transform:translateY(-1px)}
+.btn-sm.yellow{background:var(--yellow);color:var(--ink)}
+.btn-sm.yellow:hover{background:var(--ink);color:var(--yellow)}
+.btn-sm.green{background:var(--green);color:var(--paper)}
+.btn-sm.green:hover{background:var(--ink);color:var(--green)}
+
+/* ---------- Substack inline (inside founders) ---------- */
+.substack-inline{max-width:620px;margin:46px auto 0;background:var(--paper);border:1.5px solid var(--ink);box-shadow:5px 5px 0 var(--ink);padding:18px 20px;display:flex;align-items:center;gap:18px;transform:rotate(-.4deg);transition:transform .35s ease}
+.substack-inline:hover{transform:rotate(0) translateY(-2px)}
+.substack-inline .emoji{font-size:30px;flex-shrink:0}
+.substack-inline .text{flex:1;min-width:0}
+.substack-inline .lbl{display:block;font-family:var(--sans);font-weight:700;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--red);margin-bottom:4px}
+.substack-inline p{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--ink);line-height:1.35}
+@media (max-width:600px){.substack-inline{flex-direction:column;text-align:center;gap:12px}}
+
+/* ---------- PDF lead-magnet strip (between services and bundles) ---------- */
+.pdf-strip{max-width:1100px;margin:0 auto 0;background:var(--yellow);border:1.5px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:32px 36px;display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center;transform:rotate(-.4deg);transition:transform .35s ease;margin-top:80px;margin-bottom:80px}
+.pdf-strip:hover{transform:rotate(0)}
+.pdf-strip .left .eyebrow{color:var(--red);margin-bottom:10px}
+.pdf-strip .left h3{font-family:var(--serif);font-weight:700;font-size:clamp(28px,3.4vw,42px);line-height:1.02;letter-spacing:-.02em;color:var(--ink)}
+.pdf-strip .left h3 em{font-style:italic;font-weight:400;color:var(--red)}
+.pdf-strip .left p{margin-top:10px;color:var(--ink);font-size:15px;line-height:1.5;max-width:420px}
+.pdf-strip .right .pdf-form{display:flex;gap:8px;flex-wrap:wrap}
+.pdf-strip .right .pdf-form input{flex:1;min-width:180px;border:1.5px solid var(--ink);border-radius:8px;padding:12px 14px;font-family:var(--sans);font-size:14px;background:var(--paper);outline:none;transition:border-color .25s ease}
+.pdf-strip .right .pdf-form input:focus{border-color:var(--red)}
+.pdf-strip .right .pdf-form button.btn-sm{background:var(--red);color:var(--paper)}
+.pdf-strip .pdf-done{font-family:var(--serif);font-style:italic;color:var(--red);font-size:18px;line-height:1.4}
+@media (max-width:760px){.pdf-strip{grid-template-columns:1fr;gap:22px;padding:28px 24px}.pdf-strip .right .pdf-form input{width:100%}}
+
+/* PDF strip when nested inside the elevating section — narrower & layered above
+   the corner vectors/notes so it sits cleanly without clashing */
+.elevating .pdf-strip{max-width:680px;margin-top:50px;margin-bottom:20px;padding:26px 30px;position:relative;z-index:10;grid-template-columns:1fr;gap:18px}
+.elevating .pdf-strip .right .pdf-form input{min-width:0;width:100%}
+@media (min-width:980px){
+  .elevating .pdf-strip{max-width:720px;grid-template-columns:1.1fr .9fr;gap:24px}
+  .elevating .pdf-strip .right .pdf-form input{min-width:140px;width:auto}
+}
+/* hide the bottom-corner vectors so they don't sit behind the PDF card */
+.elevating .vec.v3, .elevating .vec.v4{display:none}
+
+/* ---------- Booking alt (inside signup) ---------- */
+.booking-alt{max-width:580px;margin:30px auto 0;background:rgba(245,239,224,.12);border:1.5px solid var(--paper);border-radius:14px;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.booking-alt .copy{flex:1;min-width:200px}
+.booking-alt .copy strong{font-family:var(--serif);font-style:italic;font-weight:700;color:var(--yellow);font-size:18px;display:block;line-height:1.2}
+.booking-alt .copy span{font-size:13px;color:rgba(245,239,224,.78);display:block;margin-top:2px}
+.booking-alt .btn-sm{background:var(--yellow);color:var(--ink);border-color:var(--ink)}
+.booking-alt .btn-sm:hover{background:var(--paper);color:var(--ink)}
+
+/* ---------- bundles CTA (replaces the old full bundles section) ---------- */
+.bundles-cta{padding:70px 36px;background:var(--cream);border-top:1.5px solid var(--ink);text-align:center}
+.bundles-cta .inner{max-width:680px;margin:0 auto}
+.bundles-cta .eyebrow{color:var(--red);margin-bottom:10px}
+.bundles-cta h3{font-family:var(--serif);font-weight:700;font-size:clamp(28px,3.8vw,46px);line-height:1.05;letter-spacing:-.02em;color:var(--ink)}
+.bundles-cta h3 em{font-style:italic;font-weight:400;color:var(--red)}
+.bundles-cta p{margin-top:14px;color:var(--ink-soft);font-size:16px;max-width:460px;margin-left:auto;margin-right:auto}
+.bundles-cta .btn{margin-top:26px}
+
+/* ---------- bundles (legacy — section removed, CSS left dead) ---------- */
+.bundles{padding:30px 36px 100px;background:var(--cream);border-top:1.5px solid var(--ink);position:relative}
+.bundles-head{max-width:1100px;margin:0 auto 50px;text-align:center}
+.bundles-head .h2{margin:0 auto;max-width:760px}
+.bundles-head .h2 em{font-style:italic;font-weight:400;color:var(--red)}
+.bundles-head .lead{max-width:520px;margin:18px auto 0;color:var(--ink-soft);font-size:17px}
+
+.bundle{position:relative;border:1.5px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:38px 34px;max-width:1100px;margin:0 auto 22px;transition:transform .35s ease, box-shadow .35s ease;background:var(--paper)}
+.bundle:hover{transform:translate(-3px,-3px);box-shadow:12px 12px 0 var(--ink)}
+.bundle .badge{display:inline-block;background:var(--red);color:var(--paper);padding:6px 14px;border:1.5px solid var(--ink);font-family:var(--sans);font-size:10px;letter-spacing:.22em;text-transform:uppercase;font-weight:700;border-radius:999px;margin-bottom:18px}
+.bundle h3{font-family:var(--serif);font-weight:700;font-size:clamp(28px,3.6vw,46px);line-height:1.05;letter-spacing:-.02em;color:var(--ink)}
+.bundle h3 em{font-style:italic;font-weight:400}
+.bundle .bundle-desc{margin-top:14px;max-width:620px;font-size:15.5px;line-height:1.55;color:var(--ink-soft)}
+.bundle .services-included{margin-top:26px;display:grid;grid-template-columns:repeat(2,1fr);gap:8px;border-top:1px dashed rgba(26,23,20,.3);padding-top:18px}
+.bundle .svc-item{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--ink)}
+.bundle .svc-item::before{content:"→";color:var(--red);font-family:var(--serif);font-style:italic;font-weight:700}
+.bundle .bundle-pricing{margin-top:26px;display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;border-top:1px solid rgba(26,23,20,.2);padding-top:20px}
+.bundle .alacarte{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);font-weight:500}
+.bundle .alacarte b{display:block;font-family:var(--serif);font-style:italic;font-size:18px;text-decoration:line-through;font-weight:400;opacity:.7;margin-top:3px;letter-spacing:0;text-transform:none}
+.bundle .alacarte b.no-strike{text-decoration:none;opacity:1}
+.bundle .alacarte.mt{margin-top:10px}
+.bundle .founding{text-align:right}
+.bundle .founding .label{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--red);font-weight:700;display:block}
+.bundle .founding .price{font-family:var(--serif);font-style:italic;font-weight:700;font-size:clamp(34px,4.2vw,56px);letter-spacing:-.02em;line-height:1;margin-top:4px;color:var(--ink)}
+.bundle .founding .save{display:inline-block;margin-top:6px;font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:700;color:var(--green)}
+.bundle .book{display:inline-flex;align-items:center;gap:8px;margin-top:24px;background:var(--red);color:var(--paper);padding:14px 22px;border:1.5px solid var(--ink);border-radius:8px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;font-family:var(--sans);transition:all .25s ease;cursor:pointer}
+.bundle .book:hover{background:var(--ink);color:var(--red);transform:translateY(-2px)}
+
+/* Full House: dark featured card */
+.bundle.full{background:var(--ink);color:var(--paper)}
+.bundle.full h3, .bundle.full .svc-item{color:var(--paper)}
+.bundle.full .bundle-desc{color:rgba(245,239,224,.78)}
+.bundle.full .badge{background:var(--red);color:var(--paper)}
+.bundle.full .alacarte{color:rgba(245,239,224,.6)}
+.bundle.full .services-included{border-top-color:rgba(245,239,224,.2)}
+.bundle.full .bundle-pricing{border-top-color:rgba(245,239,224,.2)}
+.bundle.full .svc-item::before{color:var(--yellow)}
+.bundle.full .founding .label{color:var(--yellow)}
+.bundle.full .founding .price{color:var(--paper)}
+.bundle.full .founding .save{color:var(--yellow)}
+.bundle.full .book{background:var(--yellow);color:var(--ink)}
+.bundle.full .book:hover{background:var(--paper);color:var(--ink)}
+
+/* Themed: grid of 4 */
+.bundles-grid{max-width:1100px;margin:0 auto 22px;display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.bundles-grid .bundle{margin:0;padding:28px 26px}
+.bundles-grid .bundle h3{font-size:clamp(24px,2.6vw,34px)}
+.bundles-grid .bundle .bundle-desc{font-size:14.5px;margin-top:10px}
+.bundles-grid .bundle .badge{background:var(--yellow);color:var(--ink)}
+.bundles-grid .bundle .services-included{grid-template-columns:1fr;gap:6px;margin-top:18px;padding-top:14px}
+.bundles-grid .bundle .svc-item{font-size:13.5px}
+.bundles-grid .bundle .bundle-pricing{margin-top:18px;padding-top:16px}
+.bundles-grid .bundle .founding .price{font-size:30px}
+
+/* MYOB: red featured card */
+.bundle.myob{background:var(--red);color:var(--paper)}
+.bundle.myob h3, .bundle.myob .svc-item{color:var(--paper)}
+.bundle.myob .bundle-desc{color:rgba(245,239,224,.92);max-width:520px}
+.bundle.myob .badge{background:var(--yellow);color:var(--ink)}
+.bundle.myob .alacarte{color:rgba(245,239,224,.78)}
+.bundle.myob .alacarte b{color:var(--paper)}
+.bundle.myob .founding .label{color:var(--yellow)}
+.bundle.myob .founding .price{color:var(--paper)}
+.bundle.myob .founding .save{color:var(--yellow)}
+.bundle.myob .book{background:var(--yellow);color:var(--ink)}
+.bundle.myob .book:hover{background:var(--paper);color:var(--ink)}
+.bundle.myob .myob-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:50px;align-items:start}
+.bundle.myob .myob-features{list-style:none;display:flex;flex-direction:column;gap:8px;margin-top:24px}
+.bundle.myob .myob-features li{display:flex;gap:10px;align-items:flex-start;font-size:14.5px;line-height:1.5;color:var(--paper)}
+.bundle.myob .myob-features li::before{content:"✦";color:var(--yellow);flex-shrink:0}
+.bundle.myob .myob-right{display:flex;flex-direction:column;gap:10px}
+.bundle.myob .myob-right .founding{text-align:left}
+.bundle.myob .myob-right .book{align-self:flex-start;margin-top:12px}
+
+@media (max-width:900px){
+  .bundles{padding:30px 24px 70px}
+  .bundle .services-included{grid-template-columns:1fr}
+  .bundle .bundle-pricing{flex-direction:column;align-items:flex-start}
+  .bundle .founding{text-align:left}
+  .bundles-grid{grid-template-columns:1fr;gap:18px}
+  .bundle.myob .myob-grid{grid-template-columns:1fr;gap:28px}
+}
+
 /* ---------- signup ---------- */
 .signup{padding:130px 36px;background:var(--green);color:var(--paper);position:relative;overflow:hidden}
 .signup-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;position:relative;z-index:2}
@@ -407,6 +586,7 @@ footer .meta{max-width:1200px;margin:30px auto 0;display:flex;justify-content:sp
     <li><a href="#vibe" data-link>Vibe Check</a></li>
     <li><a href="#founders" data-link>Founders</a></li>
     <li><a href="#services" data-link>Services</a></li>
+    <li><a href="#bundles" data-link>Bundles</a></li>
     <li><a href="#signup" data-link>Contact</a></li>
   </ul>
 </nav>
@@ -493,14 +673,14 @@ footer .meta{max-width:1200px;margin:30px auto 0;display:flex;justify-content:sp
       <h2 class="reveal d1">Are we<br/><em>on brand</em><br/>or off brand?</h2>
       <p class="sub reveal d2">A little game. Toggle the switch and see how the same idea reads in two very different voices. Spoiler: only one of these makes you wanna press follow.</p>
       <div class="toggle reveal d3" role="tablist">
-        <button id="offBtn">Off Brand</button>
-        <button class="on" id="onBtn">On Brand</button>
+        <button class="on" id="offBtn">Off Brand</button>
+        <button id="onBtn">On Brand</button>
       </div>
     </div>
     <div class="reveal d2">
-      <div class="panel" id="vibePanel">
-        <span class="tag" id="vibeTag">On Brand ✦</span>
-        <div id="vibeText">"It's giving editorial. It's giving intentional. It's giving 'I'd save this packaging just to keep on my shelf'. That's the goal: touchpoints that feel like the brand winked at you."</div>
+      <div class="panel off" id="vibePanel">
+        <span class="tag" id="vibeTag" style="background:var(--ink);color:var(--paper)">Off Brand ✗</span>
+        <div id="vibeText">Our agency synergises holistic brand solutions to leverage best in class outcomes for forward thinking stakeholders across the dynamic consumer vertical.</div>
       </div>
     </div>
   </div>
@@ -536,6 +716,21 @@ footer .meta{max-width:1200px;margin:30px auto 0;display:flex;justify-content:sp
     <!-- CTA #2 of 3 -->
     <a class="btn yellow reveal d2" href="#services" data-link>See Services</a>
   </div>
+
+  <!-- Branding Bible PDF capture (moved here from below services) -->
+  <div class="pdf-strip reveal">
+    <div class="left">
+      <span class="eyebrow">✦ Before you commit</span>
+      <h3>Grab the <em>Branding Bible.</em></h3>
+      <p>"10 things I wish I'd known before naming my brand." A free PDF for founders who'd rather read first, book later.</p>
+    </div>
+    <div class="right">
+      <form class="pdf-form" id="pdfForm" novalidate>
+        <input type="email" placeholder="your@email.com" required>
+        <button type="submit" class="btn-sm">Get the PDF</button>
+      </form>
+    </div>
+  </div>
 </section>
 
 <!-- FOUNDERS -->
@@ -547,41 +742,76 @@ footer .meta{max-width:1200px;margin:30px auto 0;display:flex;justify-content:sp
   </div>
 
   <div class="founders-grid">
-    <div class="founder reveal">
-      <div class="ph" aria-label="placeholder portrait of Nyashi">
-        <svg viewBox="0 0 92 120" preserveAspectRatio="xMidYMid slice">
-          <rect width="92" height="120" fill="#C82510"/>
-          <ellipse cx="46" cy="50" rx="18" ry="22" fill="#3a0d05" opacity=".55"/>
-          <path d="M16 120 Q16 80 46 66 Q76 80 76 120 Z" fill="#3a0d05" opacity=".55"/>
-          <ellipse cx="46" cy="48" rx="12" ry="14" fill="#e6a48f" opacity=".55"/>
-          <path d="M24 46 Q34 16 46 18 Q58 16 68 46 Q68 30 46 26 Q24 30 24 46" fill="#1f0805" opacity=".7"/>
-        </svg>
-      </div>
-      <div class="info">
-        <h4>Nyashi <em>Srivastava</em></h4>
-        <p>Lives for positioning frameworks and strategy that actually shows up in the work. Will ask <em>"but who is this for, really?"</em> until the answer is good.</p>
-        <span class="sig">"if it's not on brand, why is it on the moodboard?"</span>
+
+    <!-- Nyashi polaroid (click to flip) -->
+    <div class="founder-card f1 reveal" role="button" tabindex="0" aria-label="Click to flip Nyashi's polaroid">
+      <div class="polaroid-wrap">
+        <div class="polaroid-flipper">
+          <div class="polaroid-face front">
+            <div class="ph" aria-label="portrait of Nyashi">
+              <svg viewBox="0 0 200 240" preserveAspectRatio="xMidYMid slice">
+                <rect width="200" height="240" fill="#C82510"/>
+                <ellipse cx="100" cy="98" rx="38" ry="46" fill="#3a0d05" opacity=".55"/>
+                <path d="M30 240 Q30 160 100 130 Q170 160 170 240 Z" fill="#3a0d05" opacity=".55"/>
+                <ellipse cx="100" cy="96" rx="26" ry="30" fill="#e6a48f" opacity=".55"/>
+                <path d="M55 92 Q70 28 100 32 Q130 28 145 92 Q145 56 100 50 Q55 56 55 92" fill="#1f0805" opacity=".7"/>
+                <circle cx="80" cy="106" r="2.5" fill="#ECD754"/>
+                <circle cx="120" cy="106" r="2.5" fill="#ECD754"/>
+              </svg>
+            </div>
+            <span class="tagline">The Strategy Whisperer ✦</span>
+          </div>
+          <div class="polaroid-face back">
+            <span class="name">Nyashi Srivastava</span>
+            <p class="desc">Lives for the strategy that actually shows up in the work — not just the deck. Will ask "but who is this <em>for</em>, really?" until the answer is something she'd actually believe.</p>
+            <p class="quote">"if it's not on brand, why is it on the moodboard?" 🎯</p>
+            <p class="fact">Fuelled by Kurkure and books she insists are "research."</p>
+            <span class="hint">tap to flip back</span>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="founder reveal d2">
-      <div class="ph" aria-label="placeholder portrait of Aayushi">
-        <svg viewBox="0 0 92 120" preserveAspectRatio="xMidYMid slice">
-          <rect width="92" height="120" fill="#72C1D6"/>
-          <ellipse cx="46" cy="50" rx="18" ry="22" fill="#1f3942" opacity=".55"/>
-          <path d="M16 120 Q16 80 46 66 Q76 80 76 120 Z" fill="#4E894F" opacity=".75"/>
-          <ellipse cx="46" cy="48" rx="12" ry="14" fill="#efc28e" opacity=".7"/>
-          <path d="M22 52 Q24 16 46 20 Q68 16 70 52 Q60 32 46 26 Q32 32 22 52" fill="#1f0805" opacity=".8"/>
-          <path d="M22 52 Q24 80 32 96" fill="none" stroke="#1f0805" stroke-width="5" opacity=".7"/>
-          <path d="M70 52 Q68 80 60 96" fill="none" stroke="#1f0805" stroke-width="5" opacity=".7"/>
-        </svg>
-      </div>
-      <div class="info">
-        <h4>Aayushi <em>Malaviya</em></h4>
-        <p>Obsessed with art direction, packaging, and the way a really good logo lockup makes you stop scrolling. Will redo the kerning at 2 a.m. because <em>it matters</em>.</p>
-        <span class="sig">"pretty is the floor, iconic is the dream."</span>
+    <!-- Aayushi polaroid (click to flip) -->
+    <div class="founder-card f2 reveal d2" role="button" tabindex="0" aria-label="Click to flip Aayushi's polaroid">
+      <div class="polaroid-wrap">
+        <div class="polaroid-flipper">
+          <div class="polaroid-face front">
+            <div class="ph" aria-label="portrait of Aayushi">
+              <svg viewBox="0 0 200 240" preserveAspectRatio="xMidYMid slice">
+                <rect width="200" height="240" fill="#72C1D6"/>
+                <ellipse cx="100" cy="98" rx="38" ry="46" fill="#1f3942" opacity=".55"/>
+                <path d="M30 240 Q30 160 100 130 Q170 160 170 240 Z" fill="#4E894F" opacity=".75"/>
+                <ellipse cx="100" cy="96" rx="26" ry="30" fill="#efc28e" opacity=".7"/>
+                <path d="M50 104 Q54 28 100 36 Q146 28 150 104 Q130 60 100 52 Q70 60 50 104" fill="#1f0805" opacity=".8"/>
+                <path d="M50 104 Q54 160 70 190" fill="none" stroke="#1f0805" stroke-width="10" opacity=".7"/>
+                <path d="M150 104 Q146 160 130 190" fill="none" stroke="#1f0805" stroke-width="10" opacity=".7"/>
+                <ellipse cx="100" cy="120" rx="6" ry="2" fill="#C82510"/>
+              </svg>
+            </div>
+            <span class="tagline">The Brand Feelings Scientist ✦</span>
+          </div>
+          <div class="polaroid-face back">
+            <span class="name">Aayushi Malaviya</span>
+            <p class="desc">Obsessed with the brands that make you stop mid-scroll and feel something — and equally obsessed with figuring out exactly why. Will have opinions about your font choice before you've finished the sentence.</p>
+            <p class="quote">"pretty is the floor, iconic is the dream." 🎯</p>
+            <p class="fact">Chief meme dealer of the studio. Runs entirely on iced caramel lattes.</p>
+            <span class="hint">tap to flip back</span>
+          </div>
+        </div>
       </div>
     </div>
+
+  </div>
+
+  <!-- Substack inline subscribe (lives here because we ARE the branding bible) -->
+  <div class="substack-inline">
+    <span class="emoji" aria-hidden="true">📬</span>
+    <div class="text">
+      <span class="lbl">More of us, weekly-ish</span>
+      <p>Brand breakdowns, hot takes, and the spicy stuff we won't post on Insta. Read us on Substack.</p>
+    </div>
+    <a class="btn-sm" id="link-substack" href="https://thisissoonbrand.substack.com/" target="_blank" rel="noopener">Subscribe ↗</a>
   </div>
 
   <!-- music player -->
@@ -625,6 +855,16 @@ footer .meta{max-width:1200px;margin:30px auto 0;display:flex;justify-content:sp
   </div>
   <div class="svc-list" id="svc-list">
     <!-- inserted by JS -->
+  </div>
+</section>
+
+<!-- BUNDLES & PRICING CTA (links out to the full pricing menu on Notion) -->
+<section class="bundles-cta" id="bundles">
+  <div class="inner">
+    <span class="eyebrow">✦ Bundles &amp; Pricing</span>
+    <h3>Want the <em>full pricing menu?</em></h3>
+    <p>Bundles, à la carte, MYOB — the whole thing. Live on Notion, always up to date.</p>
+    <a class="btn" href="https://www.notion.so/Services-Pricing-6c1025be525d4d32952ac6a558991ae8?source=copy_link" target="_blank" rel="noopener">See all bundles &amp; pricing ↗</a>
   </div>
 </section>
 
@@ -833,6 +1073,15 @@ footer .meta{max-width:1200px;margin:30px auto 0;display:flex;justify-content:sp
       <span class="eyebrow reveal">✦ Let's chat</span>
       <h2 class="h2 reveal d1">Tell us about<br/>your <em>brand baby.</em></h2>
       <p class="reveal d2">Whether you're at the napkin sketch stage or three SKUs deep, we'd love to hear about it. <span class="hl y">We don't ghost like your situationships.</span> Replies in 48hrs, guaranteed.</p>
+
+      <!-- Booking alt CTA: skip the form, pick a slot -->
+      <div class="booking-alt reveal d3">
+        <div class="copy">
+          <strong>Or skip the form,</strong>
+          <span>fast deciders pick a 20-min slot.</span>
+        </div>
+        <a class="btn-sm" id="link-booking-alt" target="_blank" rel="noopener">Book a call ↗</a>
+      </div>
       <div class="row-inline reveal d3">
         <span class="pin">don't be shy ↘</span>
         <div class="circ" aria-hidden="true">
@@ -932,7 +1181,8 @@ footer .meta{max-width:1200px;margin:30px auto 0;display:flex;justify-content:sp
       <h5>Find us</h5>
       <ul>
         <li><a href="https://www.instagram.com/thisisso_onbrand?igsh=MWdzdzhpMjg5ZTQycg==" target="_blank" rel="noopener">Instagram ↗</a></li>
-        <li><a href="#" onclick="return false">LinkedIn ↗</a></li>
+        <li><a href="https://www.linkedin.com/company/this-is-so-on-brand/" target="_blank" rel="noopener">LinkedIn ↗</a></li>
+        <li><a href="https://substack.com/@thisissoonbrand" target="_blank" rel="noopener">Substack ↗</a></li>
         <li><a href="mailto:soonbrand.official@gmail.com">soonbrand.official@gmail.com</a></li>
       </ul>
     </div>
@@ -947,9 +1197,19 @@ footer .meta{max-width:1200px;margin:30px auto 0;display:flex;justify-content:sp
 </footer>
 
 <script>
-// ─────────── GOOGLE SHEETS ENDPOINT ───────────
-window.SHEETS_ENDPOINT = ''; // paste your Apps Script Web App URL here
-// ──────────────────────────────────────────────
+// ─────────────────── EDITABLE LINKS ───────────────────
+// Update these in one place; they get wired into the page on load.
+window.SHEETS_ENDPOINT     = ''; // Apps Script Web App URL for the MAIN intake form
+window.PDF_SHEETS_ENDPOINT = ''; // OPTIONAL: separate sheet for Branding Bible subscribers.
+                                 //   Leave blank to log PDF subscribers into the main SHEETS_ENDPOINT
+                                 //   (you can filter by Stage = "PDF lead magnet" in the sheet).
+window.BRANDING_BIBLE_PDF  = ''; // paste your hosted PDF URL here (Drive, Notion, etc.) — opens on submit
+window.BOOKING_URL         = 'https://calendar.app.google/Da7D4yjhKMHZLEdN8'; // Google booking link
+window.SUBSTACK_SUB_URL    = 'https://thisissoonbrand.substack.com/';
+window.SUBSTACK_PROFILE    = 'https://substack.com/@thisissoonbrand';
+window.INSTAGRAM_URL       = 'https://www.instagram.com/thisisso_onbrand?igsh=MWdzdzhpMjg5ZTQycg==';
+window.LINKEDIN_URL        = 'https://www.linkedin.com/company/this-is-so-on-brand/';
+// ───────────────────────────────────────────────────────
 
 // nav scrolled
 const nav = document.getElementById('nav');
@@ -1117,40 +1377,60 @@ document.getElementById('signupForm').addEventListener('submit',async e=>{
   document.getElementById('thanks').classList.add('show');
 });
 
-// ─────────── music player (HTML audio + scroll autoplay) ───────────
+// ─────────── music player (HTML audio + multi-strategy autoplay) ───────────
 const musToggle = document.getElementById('musToggle');
 const musEl = document.getElementById('music');
 const lofi = document.getElementById('lofi-audio');
-lofi.volume = 0.4;
-
-musToggle.addEventListener('click', () => {
-  if(lofi.paused) lofi.play().catch(()=>{});
-  else lofi.pause();
-});
-lofi.addEventListener('play', () => {
-  musToggle.textContent = '❚❚';
-  musToggle.setAttribute('aria-label','Pause music');
-  musEl.classList.add('playing');
-});
-lofi.addEventListener('pause', () => {
-  musToggle.textContent = '▶';
-  musToggle.setAttribute('aria-label','Play music');
-  musEl.classList.remove('playing');
-});
-
-// autoplay when the founders section scrolls into view (fires once)
 const fdSection = document.getElementById('founders');
-if(fdSection){
+
+if(lofi){
+  lofi.volume = 0.4;
+
+  // sync UI to audio state
+  lofi.addEventListener('play', () => {
+    musToggle.textContent = '❚❚';
+    musToggle.setAttribute('aria-label','Pause music');
+    musEl.classList.add('playing');
+  });
+  lofi.addEventListener('pause', () => {
+    musToggle.textContent = '▶';
+    musToggle.setAttribute('aria-label','Play music');
+    musEl.classList.remove('playing');
+  });
+
+  // play/pause toggle
+  musToggle.addEventListener('click', () => {
+    if(lofi.paused) lofi.play().catch(()=>{});
+    else lofi.pause();
+  });
+
+  // multi-strategy autoplay: try whenever founders is in view, and on any
+  // user gesture (browsers usually block play() without one)
   let triggered = false;
-  const musIo = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if(e.isIntersecting && !triggered){
-        triggered = true;
-        lofi.play().catch(()=>{ /* autoplay may be blocked; user can press play */ });
-      }
-    });
-  }, { threshold: 0.35 });
-  musIo.observe(fdSection);
+  let attempting = false;
+  function tryStart(){
+    if(triggered || attempting || !fdSection) return;
+    const r = fdSection.getBoundingClientRect();
+    const inView = r.top < window.innerHeight * 0.9 && r.bottom > 0;
+    if(!inView) return;
+    attempting = true;
+    const p = lofi.play();
+    if(p && p.then){
+      p.then(()=>{ triggered = true; attempting = false; })
+       .catch(()=>{ attempting = false; });
+    } else {
+      triggered = true; attempting = false;
+    }
+  }
+
+  if(fdSection){
+    const musIo = new IntersectionObserver(()=>tryStart(), { threshold: 0.1 });
+    musIo.observe(fdSection);
+  }
+
+  ['scroll','pointerdown','keydown','wheel','touchstart','click'].forEach(ev =>
+    window.addEventListener(ev, tryStart, { passive: true })
+  );
 }
 
 // interactive vectors: click to spin
@@ -1179,6 +1459,53 @@ document.querySelectorAll('.proj').forEach(p=>{
   vis.innerHTML = `<div class="flipper"><div class="face front">${original}</div><div class="face back"><h5>${title}</h5><p>${ov.desc}</p><span class="meta">${ov.scope}</span></div></div>`;
   p.addEventListener('click',()=>p.classList.toggle('flipped'));
 });
+
+// founder polaroids: click to flip
+document.querySelectorAll('.founder-card').forEach(card=>{
+  card.addEventListener('click',()=>card.classList.toggle('flipped'));
+  card.addEventListener('keydown',(e)=>{
+    if(e.key==='Enter'||e.key===' '){ e.preventDefault(); card.classList.toggle('flipped'); }
+  });
+});
+
+// wire all booking links + Substack subscribe + bundle "Book" buttons
+(function wireLinks(){
+  const bookingUrl = window.BOOKING_URL || '#';
+  document.querySelectorAll('.bundle .book').forEach(a => a.setAttribute('href', bookingUrl));
+  const bookingAlt = document.getElementById('link-booking-alt');
+  if(bookingAlt) bookingAlt.setAttribute('href', bookingUrl);
+  const substackLink = document.getElementById('link-substack');
+  if(substackLink && window.SUBSTACK_SUB_URL) substackLink.setAttribute('href', window.SUBSTACK_SUB_URL);
+})();
+
+// PDF lead-magnet form (Branding Bible) → logs to its OWN sheet when
+// PDF_SHEETS_ENDPOINT is set, otherwise falls back to the main intake sheet.
+const pdfForm = document.getElementById('pdfForm');
+if(pdfForm){
+  pdfForm.addEventListener('submit',async e=>{
+    e.preventDefault();
+    const email = pdfForm.querySelector('input[type="email"]').value.trim();
+    if(!email){ return; }
+    const endpoint = window.PDF_SHEETS_ENDPOINT || window.SHEETS_ENDPOINT;
+    if(endpoint){
+      const fd = new FormData();
+      fd.append('name','(PDF download)');
+      fd.append('email',email);
+      fd.append('brand','-');
+      fd.append('stage','PDF lead magnet');
+      fd.append('services','-');
+      fd.append('vision','Requested: 10 things I wish I\'d known before naming my brand');
+      fd.append('source','Branding Bible');
+      try{ await fetch(endpoint,{ method:'POST', body:fd, mode:'no-cors' }); }catch(err){}
+    }
+    // if a hosted PDF URL is configured, open it in a new tab so they read it now
+    if(window.BRANDING_BIBLE_PDF){
+      window.open(window.BRANDING_BIBLE_PDF, '_blank', 'noopener');
+    }
+    pdfForm.innerHTML = '<span class="pdf-done">sent ✦ check your inbox in a min</span>';
+  });
+}
+
 </script>
 </body>
 </html>
